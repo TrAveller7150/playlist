@@ -1,0 +1,709 @@
+{
+	"camera" : 
+	{
+		"center" : "0.00000 0.00000 -1.00000",
+		"eye" : "0.00000 0.00000 0.00000",
+		"up" : "0.00000 1.00000 0.00000"
+	},
+	"general" : 
+	{
+		"ambientcolor" : "0.30000 0.30000 0.30000",
+		"bloom" : false,
+		"bloomhdrfeather" : 0.1,
+		"bloomhdriterations" : 8,
+		"bloomhdrscatter" : 1.619,
+		"bloomhdrstrength" : 2.0,
+		"bloomhdrthreshold" : 1.0,
+		"bloomstrength" : 2.0,
+		"bloomthreshold" : 0.64999998,
+		"camerafade" : true,
+		"cameraparallax" : false,
+		"cameraparallaxamount" : 0.34,
+		"cameraparallaxdelay" : 0.0,
+		"cameraparallaxmouseinfluence" : 0.02,
+		"camerapreview" : true,
+		"camerashake" : false,
+		"camerashakeamplitude" : 0.22,
+		"camerashakeroughness" : 1.0,
+		"camerashakespeed" : 0.91000003,
+		"clearcolor" : "0.70000 0.70000 0.70000",
+		"clearenabled" : true,
+		"farz" : 10000.0,
+		"fov" : 50.0,
+		"hdr" : false,
+		"nearz" : 0.0099999998,
+		"orthogonalprojection" : 
+		{
+			"height" : 1440,
+			"width" : 2560
+		},
+		"skylightcolor" : "0.30000 0.30000 0.30000",
+		"zoom" : 1.0
+	},
+	"objects" : 
+	[
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"effects" : 
+			[
+				{
+					"file" : "effects/foliagesway/effect.json",
+					"id" : 136,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"phase" : 0.17,
+								"power" : 1.05,
+								"ratio" : 0.94999999,
+								"scale" : 0.17,
+								"scrolldirection" : -1.237552,
+								"speeduv" : 5.0,
+								"strength" : 0.40000001
+							},
+							"id" : 137,
+							"textures" : [ null, "masks/foliagesway_mask_8c669413", "util/noise" ]
+						}
+					],
+					"visible" : true
+				},
+				{
+					"file" : "effects/foliagesway/effect.json",
+					"id" : 189,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"phase" : 0.11,
+								"power" : 1.0,
+								"ratio" : 0.30000001,
+								"scale" : 0.050000001,
+								"scrolldirection" : 1.5137155,
+								"speeduv" : 5.0,
+								"strength" : 0.40000001
+							},
+							"id" : 190,
+							"textures" : [ null, "masks/foliagesway_mask_4a1aadb8", "util/noise" ]
+						}
+					],
+					"visible" : true
+				}
+			],
+			"id" : 62,
+			"image" : "models/bg fix.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "bg fix",
+			"origin" : "1280.00000 720.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
+			"perspective" : false,
+			"scale" : "1.00000 1.00000 1.00000",
+			"size" : "2560.00000 1440.00000",
+			"solid" : true,
+			"visible" : true
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"effects" : 
+			[
+				{
+					"file" : "effects/foliagesway/effect.json",
+					"id" : 171,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"phase" : 0.2,
+								"power" : 1.0,
+								"ratio" : 0.30000001,
+								"scale" : 0.11,
+								"scrolldirection" : -1.2490458,
+								"speeduv" : 5.0,
+								"strength" : 0.40000001
+							},
+							"id" : 174,
+							"textures" : [ null, null, "util/noise" ]
+						}
+					],
+					"visible" : true
+				}
+			],
+			"id" : 158,
+			"image" : "models/mam hoa 2.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "mam hoa 2",
+			"origin" : "1633.92664 338.89493 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
+			"perspective" : false,
+			"scale" : "1.00000 1.00000 1.00000",
+			"size" : "927.00000 685.00000",
+			"solid" : true,
+			"visible" : true
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"effects" : 
+			[
+				{
+					"file" : "effects/foliagesway/effect.json",
+					"id" : 168,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"phase" : 0.25,
+								"power" : 1.0,
+								"ratio" : 0.30000001,
+								"scale" : 0.050000001,
+								"scrolldirection" : -1.7599953,
+								"speeduv" : 5.0,
+								"strength" : 0.40000001
+							},
+							"id" : 169,
+							"textures" : [ null, null, "util/noise" ]
+						}
+					],
+					"visible" : true
+				}
+			],
+			"id" : 163,
+			"image" : "models/mam hoa 3.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "mam hoa 3",
+			"origin" : "744.02734 395.75156 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
+			"perspective" : false,
+			"scale" : "1.00000 1.00000 1.00000",
+			"size" : "893.00000 797.00000",
+			"solid" : true,
+			"visible" : true
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.00000 0.00000 0.00000",
+			"animationlayers" : 
+			[
+				{
+					"additive" : false,
+					"animation" : 351,
+					"blend" : 1.0,
+					"id" : 367,
+					"name" : "Animation 1",
+					"rate" : 1.0,
+					"visible" : true
+				}
+			],
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"effects" : 
+			[
+				{
+					"file" : "effects/waterwaves/effect.json",
+					"id" : 234,
+					"name" : "toc bay",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"direction" : -2.8006136,
+								"perspective" : 0.0,
+								"scale" : 14.86,
+								"speed" : 3.23,
+								"strength" : 0.059999999
+							},
+							"id" : 235,
+							"textures" : [ null, "masks/waterwaves_mask_315e3fd2" ]
+						}
+					],
+					"visible" : true
+				},
+				{
+					"file" : "effects/waterwaves/effect.json",
+					"id" : 385,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"direction" : -2.5535901,
+								"perspective" : 0.0099999998,
+								"scale" : 39.610001,
+								"speed" : 3.72,
+								"strength" : 0.079999998
+							},
+							"id" : 386,
+							"textures" : [ null, "masks/waterwaves_mask_6f883990" ]
+						}
+					],
+					"visible" : true
+				},
+				{
+					"file" : "effects/iris/effect.json",
+					"id" : 199,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"noiseamount" : 0.33000001,
+								"phase" : 0.0,
+								"rough" : 0.41,
+								"scale" : "0.54 0.54",
+								"speed" : 0.46000001
+							},
+							"id" : 200,
+							"textures" : [ null, "masks/iris_mask_377e0831" ]
+						}
+					],
+					"visible" : true
+				},
+				{
+					"file" : "effects/shake/effect.json",
+					"id" : 445,
+					"name" : "Blink duoi",
+					"passes" : 
+					[
+						{
+							"combos" : 
+							{
+								"DIRECTION" : 1
+							},
+							"constantshadervalues" : 
+							{
+								"bounds" : "0.994 0.998",
+								"friction" : "1 1",
+								"speed" : 0.68000001,
+								"strength" : 0.079999998
+							},
+							"id" : 446,
+							"textures" : 
+							[
+								null,
+								"masks/shake_mask_98446507",
+								"util/white",
+								"masks/shake_mask_646fa45f"
+							]
+						}
+					],
+					"visible" : true
+				},
+				{
+					"file" : "effects/shake/effect.json",
+					"id" : 417,
+					"name" : "Blink tren",
+					"passes" : 
+					[
+						{
+							"combos" : 
+							{
+								"DIRECTION" : 1
+							},
+							"constantshadervalues" : 
+							{
+								"bounds" : "0.994 0.998",
+								"friction" : "1 1",
+								"speed" : 0.68000001,
+								"strength" : 0.1
+							},
+							"id" : 418,
+							"textures" : 
+							[
+								null,
+								"masks/shake_mask_b932a493",
+								"util/white",
+								"masks/shake_mask_b88c8c27"
+							]
+						}
+					],
+					"visible" : true
+				},
+				{
+					"file" : "effects/waterwaves/effect.json",
+					"id" : 177,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"direction" : 2.301703,
+								"perspective" : 0.0,
+								"scale" : 4.96,
+								"speed" : 2.48,
+								"strength" : 0.039999999
+							},
+							"id" : 180,
+							"textures" : [ null, "masks/waterwaves_mask_95c1709d" ]
+						}
+					],
+					"visible" : true
+				},
+				{
+					"file" : "effects/shake/effect.json",
+					"id" : 300,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"combos" : 
+							{
+								"DIRECTION" : 0
+							},
+							"constantshadervalues" : 
+							{
+								"bounds" : "0 1",
+								"friction" : "1 1",
+								"speed" : 1.2,
+								"strength" : 0.050000001
+							},
+							"id" : 301,
+							"textures" : [ null, "masks/shake_mask_4ccd765a", "util/white" ]
+						}
+					],
+					"visible" : true
+				}
+			],
+			"id" : 55,
+			"image" : "models/puppet ward model.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "puppet ward model",
+			"origin" : "1280.00000 720.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
+			"perspective" : false,
+			"scale" : "1.00000 1.00000 1.00000",
+			"size" : "1644.00000 1600.00000",
+			"solid" : true,
+			"visible" : true
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.00000 0.00000 0.00000",
+			"animationlayers" : 
+			[
+				{
+					"additive" : false,
+					"animation" : 54,
+					"blend" : 1.0,
+					"id" : 75,
+					"name" : "Animation 1",
+					"rate" : 1.0,
+					"visible" : true
+				}
+			],
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"effects" : 
+			[
+				{
+					"file" : "effects/foliagesway/effect.json",
+					"id" : 120,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"combos" : 
+							{
+								"MODE" : 0
+							},
+							"constantshadervalues" : 
+							{
+								"phase" : 0.46000001,
+								"power" : 1.05,
+								"ratio" : 0.27000001,
+								"scale" : 0.0099999998,
+								"scrolldirection" : 1.0049421,
+								"speeduv" : 5.0,
+								"strength" : 0.40000001
+							},
+							"id" : 121,
+							"textures" : [ null, "masks/foliagesway_mask_248b980e", "util/noise" ]
+						}
+					],
+					"visible" : true
+				},
+				{
+					"file" : "effects/foliagesway/effect.json",
+					"id" : 107,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"combos" : 
+							{
+								"MODE" : 0
+							},
+							"constantshadervalues" : 
+							{
+								"phase" : 0.81,
+								"power" : 1.0,
+								"ratio" : 1.36,
+								"scale" : 0.029999999,
+								"scrolldirection" : -2.2794225,
+								"speeduv" : 5.0,
+								"strength" : 0.40000001
+							},
+							"id" : 108,
+							"textures" : [ null, "masks/foliagesway_mask_4ad1bda9", "util/noise" ]
+						}
+					],
+					"visible" : true
+				}
+			],
+			"id" : 45,
+			"image" : "models/hoa.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "hoa",
+			"origin" : "1280.00000 720.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
+			"perspective" : false,
+			"scale" : "1.00000 1.00000 1.00000",
+			"size" : "1221.00000 1224.00000",
+			"solid" : true,
+			"visible" : true
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"effects" : 
+			[
+				{
+					"file" : "effects/opacity/effect.json",
+					"id" : 178,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"alpha" : 1.0
+							},
+							"id" : 179,
+							"textures" : [ null, "masks/opacity_mask_f4bb2e80" ]
+						}
+					],
+					"visible" : true
+				},
+				{
+					"file" : "effects/foliagesway/effect.json",
+					"id" : 172,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"phase" : 0.22,
+								"power" : 1.0,
+								"ratio" : 1.21,
+								"scale" : 0.059999999,
+								"scrolldirection" : -1.1751066,
+								"speeduv" : 5.0,
+								"strength" : 0.40000001
+							},
+							"id" : 173,
+							"textures" : [ null, null, "util/noise" ]
+						}
+					],
+					"visible" : true
+				}
+			],
+			"id" : 166,
+			"image" : "models/mam hoa.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "mam hoa",
+			"origin" : "1564.11719 186.81354 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
+			"perspective" : false,
+			"scale" : "1.00000 1.00000 1.00000",
+			"size" : "603.00000 411.00000",
+			"solid" : true,
+			"visible" : true
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 127,
+			"image" : "models/shadow.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "shadow",
+			"origin" : "1280.00000 720.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
+			"perspective" : false,
+			"scale" : "1.00000 1.00000 1.00000",
+			"size" : "2560.00000 1440.00000",
+			"solid" : true,
+			"visible" : true
+		},
+		{
+			"angles" : "-0.00000 -0.00000 -0.15564",
+			"id" : 131,
+			"instanceoverride" : 
+			{
+				"alpha" : 0.30000001,
+				"count" : 0.69999999,
+				"id" : 132,
+				"rate" : 1.88
+			},
+			"locktransforms" : true,
+			"name" : "Light shafts 1",
+			"origin" : "1098.93616 863.03992 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
+			"particle" : "particles/presets/light_shafts_1.json",
+			"scale" : "2.60217 1.32806 1.00000",
+			"visible" : true
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"effects" : 
+			[
+				{
+					"file" : "effects/godrays/effect.json",
+					"id" : 375,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"noiseamount" : 0.60000002,
+								"noisescale" : 3.7,
+								"noisesmoothness" : 0.23999999,
+								"noisespeed" : 0.13,
+								"raythreshold" : 0.38999999
+							},
+							"id" : 376,
+							"textures" : [ null, null, "util/clouds_256" ]
+						},
+						{
+							"constantshadervalues" : 
+							{
+								"center" : "1 0",
+								"color" : "1 1 0",
+								"rayintensity" : 0.25,
+								"raylength" : 0.44999999
+							},
+							"id" : 378
+						},
+						{
+							"constantshadervalues" : 
+							{
+								"blurscale" : "1 1"
+							},
+							"id" : 379
+						},
+						{
+							"combos" : 
+							{
+								"VERTICAL" : 1
+							},
+							"constantshadervalues" : 
+							{
+								"blurscale" : "1 1"
+							},
+							"id" : 380
+						},
+						{
+							"combos" : 
+							{
+								"COPYBG" : 0
+							},
+							"id" : 381,
+							"textures" : [ null, "_rt_imageLayerComposite_373_b" ]
+						}
+					],
+					"visible" : true
+				},
+				{
+					"file" : "effects/filmgrain/effect.json",
+					"id" : 142,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"combos" : 
+							{
+								"BLENDMODE" : 12,
+								"GREYSCALE" : 1
+							},
+							"constantshadervalues" : 
+							{
+								"exponent" : 0.5,
+								"scale" : 10,
+								"strength" : 0.30000001
+							},
+							"id" : 0,
+							"textures" : [ null, "util/noise" ]
+						}
+					],
+					"visible" : true
+				}
+			],
+			"id" : 373,
+			"image" : "models/util/fullscreenlayer.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "Fullscreen",
+			"parallaxDepth" : "1.00000 1.00000",
+			"perspective" : false,
+			"solid" : true,
+			"visible" : true
+		}
+	],
+	"version" : 1
+}

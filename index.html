@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3eb">
+  <meta name="description" content="TrAveller7150's Playlist，一本关于生活、音乐和缓慢日常的私人手记。">
+  <title>TrAveller7150's Playlist</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="interactions.css">
+</head>
+<body class="cover-mode">
+  <a class="skip-link" href="#journal">跳到手记</a>
+  <header class="site-header" id="header">
+    <a class="brand" href="#home" aria-label="日光之间，回到首页"><span class="sun-symbol" aria-hidden="true">✳</span> 日光之间<span class="brand-en">BETWEEN THE LIGHT</span></a>
+    <nav aria-label="主导航"><a href="#journal">手记</a><a href="#moments">片刻</a><a href="#about">关于</a><span class="nav-note">慢一点，也没关系。</span></nav>
+  </header>
+  <main id="home-view">
+    <div class="cover-shell">
+      <section class="hero" id="hero" aria-label="夏日向日葵花田">
+        <div id="stage"><canvas id="wallpaper" aria-hidden="true"></canvas></div><div class="hero-shade"></div>
+        <h1 class="hero-title">TrAveller7150's<br>Playlist</h1>
+        <div class="cover-curtain" aria-hidden="true"></div>
+        <span class="hero-caption">SUNFLOWERS, LATE SUMMER / 原画 EB十</span>
+      </section>
+    </div>
+    <section class="journal section-shell" id="journal" aria-labelledby="journal-title">
+      <div class="section-heading"><div><span class="eyebrow olive">SIDE A / THE JOURNAL</span><h2 id="journal-title">最近留下的东西<span class="small-sun" aria-hidden="true">✳</span></h2></div><p>不赶时间的记录，<br>也不一定有什么道理。</p></div>
+      <div class="journal-layout"><div>
+        <div class="filter-row"><div class="filters" role="group" aria-label="手记分类"><button data-filter="全部" aria-pressed="true">全部</button><button data-filter="生活" aria-pressed="false">生活</button><button data-filter="音乐" aria-pressed="false">音乐</button><button data-filter="观察" aria-pressed="false">观察</button></div><span id="post-count" aria-live="polite"></span></div>
+        <div id="post-list"></div><p class="list-end">暂时写到这里。下次再慢慢说。<span>—</span></p>
+      </div><aside class="sidebar">
+        <div class="side-note"><span class="eyebrow olive">A NOTE TO YOU</span><h3>欢迎来坐一会儿。</h3><p>这里收留一些平凡的日子：循环播放的歌、走过的路，和偶尔冒出来的念头。</p><a href="#about" class="text-link">关于这片小角落 <span>↗</span></a></div>
+        <div class="now-note"><span class="status-dot"></span><span class="eyebrow olive">此刻的提案</span><p>关掉一些通知，<br>把一首歌听完。</p><span class="handwritten">one thing at a time.</span></div>
+        <div class="margin-note"><span>01 — 05</span><p>这一页暂用五篇示例手记，<br>等待真实的生活慢慢填满。</p></div>
+      </aside></div>
+    </section>
+    <section class="moments section-shell" id="moments" aria-labelledby="moments-title"><div class="section-heading"><div><span class="eyebrow olive">SIDE B / LITTLE THINGS</span><h2 id="moments-title">不成篇的片刻</h2></div><span class="section-subtitle">短一点，也值得留下。</span></div>
+      <div class="moment-grid"><a class="image-moment" href="#post/summer-light"><div class="moment-image" role="img" aria-label="向日葵插画局部"></div><div><span class="eyebrow">01 / 一束光</span><p>今天也想停在夏天里。</p><span>插画收藏 · EB十 ↗</span></div></a><div class="quote-moment"><span class="eyebrow olive">02 / 一句碎念</span><span class="quote-mark">“</span><p>生活里有些好时刻，<br>是不需要配文的。</p><span class="moment-foot">就记下这个念头。</span></div><a class="sound-moment" href="#post/listen-again"><span class="eyebrow olive">03 / 一首歌的时间</span><div class="record" aria-hidden="true"><span>slow<br>days</span></div><p>给今天留一点留白。</p><span class="moment-foot">关于听歌的小手记 ↗</span></a></div>
+    </section>
+    <section class="about section-shell" id="about" aria-labelledby="about-title"><span class="sun-symbol" aria-hidden="true">✳</span><div><span class="eyebrow olive">A SMALL PLACE OF MY OWN</span><h2 id="about-title">在热闹的互联网，<br>留一小块安静的地方。</h2><p>这里叫「日光之间」。记录生活，也存放偏爱。<br>可以是一段长长的故事，也可以只是今天的风。</p><p class="about-sign">不用每件事都有意义，喜欢就很好。</p></div><a class="back-top" href="#home">回到日光里 ↑</a></section>
+  </main>
+  <main id="article-view" hidden><div class="reading-progress" id="reading-progress"></div><article class="article-shell"><a href="#journal" class="article-back">← 返回手记</a><div id="article-content"></div><div class="article-end"><span>✳</span><p>谢谢你，读到这里。</p></div><a id="next-post" class="next-post"></a></article></main>
+  <footer class="site-footer"><span>© <span id="year"></span> 日光之间</span><span>记录那些轻轻经过的日子。</span><a href="#home">BACK TO THE LIGHT ↗</a></footer>
+  <div class="music-player" id="music-player" aria-label="音乐播放器">
+    <button id="music-drag" class="music-drag" aria-label="移动播放器（方向键可移动）" title="拖动播放器">⠿</button>
+    <button id="music-collapse" class="music-collapse" aria-label="缩小播放器" title="缩小播放器">−</button>
+    <button id="music-orb" class="music-orb" aria-label="展开音乐播放器" aria-expanded="false"><span aria-hidden="true">♫</span></button>
+    <div class="track-summary"><div class="album-disc" aria-hidden="true"></div><div class="music-track"><button id="choose-music" title="选择本地歌曲">summer playlist</button><span id="music-artist">Corn Wave</span></div></div>
+    <div class="transport"><button id="music-prev" class="icon-button" aria-label="上一首" title="上一首"><img src="assets/icons/skip-back.svg" alt=""></button><button id="music-play" class="music-play" aria-label="播放音乐" title="播放"><img src="assets/icons/play.svg" alt=""></button><button id="music-next" class="icon-button" aria-label="下一首" title="下一首"><img src="assets/icons/skip-forward.svg" alt=""></button></div>
+    <input id="music-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="音乐播放进度" disabled>
+<div class="music-tools"><span id="music-time">00:00 / 00:00</span><button id="music-mute" class="icon-button" aria-label="静音" title="静音"><img src="assets/icons/volume-2.svg" alt=""></button><input id="music-volume" type="range" min="0" max="1" step="0.01" value="0.5" aria-label="音量"><label class="music-file-label" title="添加本地歌曲"><img src="assets/icons/plus.svg" alt=""><input id="music-file" type="file" accept="audio/*" multiple aria-label="添加本地歌曲"></label></div>
+    <audio id="audio" preload="metadata" src="Corn%20Wave%20-%20summer%20playlist.mp3" autoplay></audio><span id="music-status" class="sr-only" aria-live="polite"></span>
+  </div>
+  <script type="module" src="blog.js"></script><script type="module" src="interactions.js"></script><script type="module" src="app.js"></script>
+</body>
+</html>

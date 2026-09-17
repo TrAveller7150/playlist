@@ -1,0 +1,5 @@
+{
+	"autosize" : true,
+	"material" : "materials/hoa.json",
+	"puppet" : "models/hoa_puppet.mdl"
+}

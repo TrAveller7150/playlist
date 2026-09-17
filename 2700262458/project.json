@@ -1,0 +1,27 @@
+{
+	"approved" : true,
+	"contentrating" : "Everyone",
+	"description" : "[img]https://i.imgur.com/Xwr3g1R.png[/img]\nArtist by: EB十\nhttps://www.pixiv.net/en/users/2345928\n\nThe wallpaper has been edited\nhttps://www.uhdpaper.com/2021/10/anime-girl-sunflower-field-4k-854a.html\n\nRecommendation\n- In the settings of Wallpaper Engine software you customize FPS at 30 - 60 for the smoothest experience.\n\nThanks for subscribed my product.",
+	"file" : "scene.json",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "1 0.9686274509803922 0"
+			}
+		}
+	},
+	"preview" : "preview.gif",
+	"tags" : [ "Anime" ],
+	"title" : "EB十 Sunflower Girl",
+	"type" : "scene",
+	"version" : 1,
+	"visibility" : "public",
+	"workshopid" : "2700262458",
+	"workshopurl" : "steam://url/CommunityFilePage/2700262458"
+}
