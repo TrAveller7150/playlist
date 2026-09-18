@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 
 for (const name of ['puppet ward model', 'hoa']) {
-  const b = fs.readFileSync(`assets/scene/models/${name}_puppet.mdl`);
+  const b = fs.readFileSync(`site/assets/scene/models/${name}_puppet.mdl`);
   let p = 0;
   const uint = () => { const v = b.readUInt32LE(p); p += 4; return v; };
   const float = () => { const v = b.readFloatLE(p); p += 4; return v; };
@@ -54,7 +54,7 @@ for (const name of ['puppet ward model', 'hoa']) {
   if (p + 4 === endOffset && uint() !== 0) throw new Error('Unsupported animation extension');
   if (p !== endOffset) throw new Error(`Animation end mismatch ${p} != ${endOffset}`);
   const out = { vertices, indices, bones, animations };
-  fs.mkdirSync('assets/models', { recursive: true });
-  fs.writeFileSync(`assets/models/${name}.json`, JSON.stringify(out));
+  fs.mkdirSync('site/assets/models', { recursive: true });
+  fs.writeFileSync(`site/assets/models/${name}.json`, JSON.stringify(out));
   console.log(name, vertices.length, 'vertices;', bones.length, 'bones;', animations.map(a => ({ duration: a.duration, frames: a.frames, channels: a.channels.length, first: a.channels.slice(0, 5).map(c => c.samples[0]) })));
 }

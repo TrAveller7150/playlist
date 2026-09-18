@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#f5f3eb">
   <meta name="description" content="TrAveller7150's Playlist，一本关于生活、音乐和缓慢日常的私人手记。">
   <title>TrAveller7150's Playlist</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="interactions.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/interactions.css">
 </head>
 <body class="cover-mode">
   <a class="skip-link" href="#journal">跳到手记</a>
@@ -51,8 +51,8 @@
     <div class="transport"><button id="music-prev" class="icon-button" aria-label="上一首" title="上一首"><img src="assets/icons/skip-back.svg" alt=""></button><button id="music-play" class="music-play" aria-label="播放音乐" title="播放"><img src="assets/icons/play.svg" alt=""></button><button id="music-next" class="icon-button" aria-label="下一首" title="下一首"><img src="assets/icons/skip-forward.svg" alt=""></button></div>
     <input id="music-seek" type="range" min="0" max="100" step="0.01" value="0" aria-label="音乐播放进度" disabled>
 <div class="music-tools"><span id="music-time">00:00 / 00:00</span><button id="music-mute" class="icon-button" aria-label="静音" title="静音"><img src="assets/icons/volume-2.svg" alt=""></button><input id="music-volume" type="range" min="0" max="1" step="0.01" value="0.5" aria-label="音量"><label class="music-file-label" title="添加本地歌曲"><img src="assets/icons/plus.svg" alt=""><input id="music-file" type="file" accept="audio/*" multiple aria-label="添加本地歌曲"></label></div>
-    <audio id="audio" preload="metadata" src="Corn%20Wave%20-%20summer%20playlist.mp3" autoplay></audio><span id="music-status" class="sr-only" aria-live="polite"></span>
+    <audio id="audio" preload="metadata" src="media/summer-playlist.mp3" autoplay></audio><span id="music-status" class="sr-only" aria-live="polite"></span>
   </div>
-  <script type="module" src="blog.js"></script><script type="module" src="interactions.js"></script><script type="module" src="app.js"></script>
+  <script type="module" src="scripts/blog.js"></script><script type="module" src="scripts/interactions.js"></script><script type="module" src="scripts/wallpaper.js"></script>
 </body>
 </html>

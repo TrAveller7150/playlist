@@ -2,5 +2,8 @@
   "name": "sunflower-wallpaper-study",
   "private": true,
   "type": "module",
-  "scripts": { "start": "node server.mjs", "extract": "node scripts/extract-scene.mjs && python scripts/decode-textures.py && node scripts/decode-models.mjs" }
+  "scripts": {
+    "start": "node server.mjs",
+    "extract": "node tools/wallpaper-engine/extract-scene.mjs && python tools/wallpaper-engine/decode-textures.py && node tools/wallpaper-engine/decode-models.mjs"
+  }
 }

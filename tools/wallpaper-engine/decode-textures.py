@@ -5,7 +5,7 @@ import struct
 import lz4.block
 from PIL import Image
 
-for source in Path('assets/scene/materials').rglob('*.tex'):
+for source in Path('site/assets/scene/materials').rglob('*.tex'):
     data = source.read_bytes()
     assert data[:9] == b'TEXV0005\0'
     fmt = struct.unpack_from('<I', data, 18)[0]
@@ -25,7 +25,7 @@ for source in Path('assets/scene/materials').rglob('*.tex'):
         img = Image.frombytes('RGBA', (w, h), raw)
     else:
         raise ValueError((source, fmt, w, h, len(raw)))
-    target = Path('assets/textures') / source.relative_to('assets/scene/materials').with_suffix('.png')
+    target = Path('site/assets/textures') / source.relative_to('site/assets/scene/materials').with_suffix('.png')
     target.parent.mkdir(parents=True, exist_ok=True)
     img.save(target)
     print(target, img.size, img.mode)
