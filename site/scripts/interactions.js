@@ -80,10 +80,13 @@ function updateScene() {
   hero.inert = next;
   for (const section of document.querySelectorAll('#home-view > section, .site-footer')) section.inert = !next;
   if (next === compact) return;
+  const enteringContent = next && !compact;
   compact = next;
+  if (enteringContent) collapsed = true;
   animateChange(() => {
   player.classList.toggle('compact', compact);
   player.classList.toggle('collapsed', compact && collapsed);
+  orb.setAttribute('aria-expanded', String(compact && !collapsed));
   if (compact && position) place(position.x, position.y);
   else { player.style.left = '';player.style.top = '';player.style.right = '';player.style.bottom = ''; }
   });

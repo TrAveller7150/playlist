@@ -1,2 +1,6 @@
 docs/*
 !docs/architecture.md
+node_modules/
+content/.obsidian/workspace*.json
+content/.obsidian/cache/
+content/.trash/

@@ -3,7 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node server.mjs",
+    "build:content": "node tools/build-content.mjs",
+    "build": "npm run build:content",
+    "start": "npm run build:content && node server.mjs",
     "extract": "node tools/wallpaper-engine/extract-scene.mjs && python tools/wallpaper-engine/decode-textures.py && node tools/wallpaper-engine/decode-models.mjs"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "marked": "^18.0.13"
   }
 }
