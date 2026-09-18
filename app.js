@@ -5,6 +5,39 @@ const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let visible = true, time = 0, last = 0;
 let layers = [], sceneTarget, finalProgram, meshProgram, effectProgram, quad;
 let frameFence = null, lastDraw = 0;
+let titleTexture, titleQuad, titleSize = '';
+
+function updateTitleTexture() {
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  const size = `${w}:${h}`;
+  if (size === titleSize) return;
+  titleSize = size;
+  const surface = document.createElement('canvas');surface.width = 2560;surface.height = 1440;
+  const ctx = surface.getContext('2d');
+  const scale = Math.max(w / 2560, h / 1440);
+  ctx.setTransform(1 / scale, 0, 0, 1 / scale, (2560 - w / scale) / 2, (1440 - h / scale) / 2);
+  const frame = canvas.getBoundingClientRect();
+  ctx.textBaseline = 'alphabetic';
+  for (const line of document.querySelectorAll('.hero-title span')) {
+    const style = getComputedStyle(line), rect = line.getBoundingClientRect();
+    ctx.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+    const metrics = ctx.measureText(line.textContent);
+    const ascent = metrics.fontBoundingBoxAscent ?? parseFloat(style.fontSize) * .8;
+    const descent = metrics.fontBoundingBoxDescent ?? parseFloat(style.fontSize) * .2;
+    const baseline = (rect.height - ascent - descent) / 2 + ascent;
+    ctx.fillStyle = '#fff';
+    ctx.shadowColor = '#111a0da6';ctx.shadowBlur = 16;ctx.shadowOffsetX = 2;ctx.shadowOffsetY = 7;
+    ctx.fillText(line.textContent, rect.left - frame.left, rect.top - frame.top + baseline);
+  }
+  if (titleTexture) gl.deleteTexture(titleTexture);
+  titleTexture = texture(2560,1440,surface);
+}
+function drawTitle() {
+  gl.bindFramebuffer(gl.FRAMEBUFFER,sceneTarget.fbo);gl.viewport(0,0,2560,1440);
+  gl.useProgram(meshProgram.p);gl.enable(gl.BLEND);
+  gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
+  bindTexture(meshProgram,'source',titleTexture,0);draw(titleQuad);
+}
 
 const vertex = `#version 300 es
 layout(location=0) in vec2 position; layout(location=1) in vec2 texcoord; out vec2 uv;
@@ -181,8 +214,11 @@ function render() {
   const width=Math.round(canvas.clientWidth*devicePixelRatio),height=Math.round(canvas.clientHeight*devicePixelRatio);
   if(!width||!height)return;
   if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;}
+  const layeredTitle = canvas.clientWidth > 650;
+  if(layeredTitle) updateTitleTexture();
   gl.bindFramebuffer(gl.FRAMEBUFFER,sceneTarget.fbo);gl.viewport(0,0,sceneTarget.w,sceneTarget.h);gl.clearColor(.1,.12,.08,1);gl.clear(gl.COLOR_BUFFER_BIT);
   for(const layer of layers){
+    if(layeredTitle && layer.object.name === 'mam hoa 2') drawTitle();
     if(layer.model)skin(layer,time);
     const tex=applyEffects(layer);
     gl.bindFramebuffer(gl.FRAMEBUFFER,sceneTarget.fbo);gl.viewport(0,0,sceneTarget.w,sceneTarget.h);gl.useProgram(meshProgram.p);
@@ -209,17 +245,19 @@ function tick(now){
 new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;if(visible&&layers.length&&reducedMotion.matches)render();},{threshold:0}).observe($('hero'));
 window.addEventListener('resize',()=>{if(layers.length&&visible)render();});
 document.addEventListener('visibilitychange',()=>{last=0;});
-canvas.addEventListener('webglcontextlost',()=>{canvas.style.opacity='0';});
+canvas.addEventListener('webglcontextlost',()=>{canvas.style.opacity='0';$('hero').classList.remove('title-composited');});
 
 try{
   if(!gl)throw new Error('当前浏览器不支持 WebGL 2，请使用较新的浏览器。');
   meshProgram=program(vertex,`#version 300 es\nprecision highp float;in vec2 uv;out vec4 color;uniform sampler2D source;void main(){color=texture(source,uv);}`);
   effectProgram=program(vertex,fragment);finalProgram=program(vertex,finalFragment);
   quad=geometry(new Float32Array([-1,-1,0,0,1,-1,1,0,-1,1,0,1,1,1,1,1]),[0,1,2,2,1,3]);
+  titleQuad=geometry(new Float32Array([-1,-1,0,1,1,-1,1,1,-1,1,0,0,1,1,1,0]),[0,1,2,2,1,3]);
   sceneTarget=target(2560,1440);
   const scene=await json('assets/scene/scene.json');
   // Keep GPU allocation sequential: image uploads mutate the active texture unit.
   for(const object of scene.objects.filter(o=>o.image&&o.origin))layers.push(await loadLayer(object));
-  render();canvas.classList.add('ready');
+  await document.fonts.ready;
+  render();canvas.classList.add('ready');$('hero').classList.add('title-composited');
   requestAnimationFrame(tick);
-}catch(error){console.error(error);canvas.style.opacity='0';}
+}catch(error){console.error(error);canvas.style.opacity='0';$('hero').classList.remove('title-composited');}

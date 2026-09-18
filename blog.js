@@ -89,7 +89,7 @@ function selectTrack(index) {
   $('choose-music').textContent = track.title;
   $('music-artist').textContent = track.artist;
   $('choose-music').title = `${track.title} · 添加本地歌曲`;
-  $('music-seek').value = 0;$('music-seek').disabled = true;$('music-time').textContent = '00:00 / 00:00';
+  $('music-seek').value = 0;$('music-player').style.setProperty('--seek', '0%');$('music-seek').disabled = true;$('music-time').textContent = '00:00 / 00:00';
   play();
 }
 $('music-file').onchange = event => {
@@ -117,14 +117,25 @@ $('music-volume').oninput = event => { audio.volume = Number(event.target.value)
 volumeState();
 audio.addEventListener('loadedmetadata', () => {
   $('music-seek').disabled = !Number.isFinite(audio.duration) || audio.duration <= 0;
-  $('music-time').textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+  renderPlaybackProgress();
 });
-audio.addEventListener('timeupdate', () => {
+let progressFrame = 0;
+function renderPlaybackProgress() {
   $('music-time').textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
-  $('music-seek').value = Number.isFinite(audio.duration) && audio.duration > 0 ? audio.currentTime / audio.duration * 100 : 0;
-  $('music-player').style.setProperty('--seek', `${$('music-seek').value}%`);
-});
-$('music-seek').oninput = event => { if (Number.isFinite(audio.duration)) audio.currentTime = Number(event.target.value) / 100 * audio.duration; };
-for (const event of ['play', 'pause', 'ended']) audio.addEventListener(event, audioState);
+  const progress = Number.isFinite(audio.duration) && audio.duration > 0 ? audio.currentTime / audio.duration * 100 : 0;
+  $('music-seek').value = progress;
+  $('music-player').style.setProperty('--seek', `${progress}%`);
+}
+function animatePlaybackProgress() {
+  cancelAnimationFrame(progressFrame);
+  const tick = () => {
+    renderPlaybackProgress();
+    if (!audio.paused && !audio.ended) progressFrame = requestAnimationFrame(tick);
+  };
+  tick();
+}
+audio.addEventListener('timeupdate', renderPlaybackProgress);
+$('music-seek').oninput = event => { if (Number.isFinite(audio.duration)) { audio.currentTime = Number(event.target.value) / 100 * audio.duration;renderPlaybackProgress(); } };
+for (const event of ['play', 'pause', 'ended']) audio.addEventListener(event, () => { audioState();animatePlaybackProgress(); });
 audio.addEventListener('error', () => { $('choose-music').textContent = '无法播放，点此更换音乐';$('music-status').textContent = '音频格式不受支持或文件无法读取。';$('music-seek').disabled = true;audioState(); });
 play(true);
