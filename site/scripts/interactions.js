@@ -99,6 +99,7 @@ function scheduleScene() {
 }
 window.addEventListener('scroll', scheduleScene, { passive: true });
 window.addEventListener('hashchange', () => { resetReturn();scheduleScene(); });
+window.addEventListener('load', scheduleScene);
 window.addEventListener('resize', () => { updateScene();if (compact && position) place(position.x, position.y); });
 function collapse(value) {
   collapsed = value;

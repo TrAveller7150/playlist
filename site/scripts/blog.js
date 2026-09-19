@@ -3,7 +3,6 @@ import { about, notes, posts } from '../data/content.js';
 const $ = id => document.getElementById(id);
 let homeScroll = 0, wasInnerPage = false;
 history.scrollRestoration = 'manual';
-$('year').textContent = new Date().getFullYear();
 $('archive-year').textContent = new Date().getFullYear();
 const escapeHtml = value => String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
 const readingTime = post => Math.max(1, Math.ceil(post.body.replace(/<[^>]*>/g, '').length / 350));
@@ -73,7 +72,7 @@ function route() {
     $('article-back').textContent = '← 返回手记';
     if (wasInnerPage && (!hash || hash === 'journal')) scrollTo({ top: Math.max(homeScroll, $('journal').offsetTop), behavior: 'instant' });
     else if (!hash || hash === 'home') scrollTo({ top: 0, behavior: 'instant' });
-    else if (['journal', 'articles'].includes(hash)) scrollTo({top: $(hash).offsetTop, behavior: 'instant'});
+    else if (['journal', 'articles', 'camp'].includes(hash)) scrollTo({top: $(hash).offsetTop, behavior: 'instant'});
   }
   wasInnerPage = innerPage;
   updateProgress();
