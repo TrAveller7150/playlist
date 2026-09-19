@@ -9,18 +9,19 @@ const escapeHtml = value => String(value).replace(/[&<>'"]/g, character => ({ '&
 const readingTime = post => Math.max(1, Math.ceil(post.body.replace(/<[^>]*>/g, '').length / 350));
 const meta = post => `<span class="category">${escapeHtml(post.category)}</span><time datetime="${post.date.replaceAll('.', '-')}">${escapeHtml(post.date)}</time><span>${readingTime(post)} 分钟</span>`;
 const coverImage = (post, className) => post.cover ? `<div class="${className}"><img src="${escapeHtml(post.cover.src)}" alt="${escapeHtml(post.cover.alt)}" style="object-position:${escapeHtml(post.cover.position)}"></div>` : '';
+const excerpt = (post, className = '') => post.excerpt ? `<p${className ? ` class="${className}"` : ''}>${escapeHtml(post.excerpt)}</p>` : '';
 
 function renderContent() {
   const issueDate = notes[0]?.date || about.date;
   $('issue-number').textContent = `ISSUE ${issueDate.slice(0, 7)}`;
   $('featured-post').href = '#about-me';
-  $('featured-post').innerHTML = `${about.cover ? `<img class="featured-image" src="${escapeHtml(about.cover.src)}" alt="" style="object-position:${escapeHtml(about.cover.position)}">` : ''}<span class="featured-number">ABOUT</span><div><div class="featured-meta"><span>PERMANENT NOTE</span><span>${readingTime(about)} MIN</span></div><h3>${escapeHtml(about.title)}</h3><p>${escapeHtml(about.excerpt)}</p><span class="featured-link">继续阅读 ↗</span></div>`;
+  $('featured-post').innerHTML = `${about.cover ? `<img class="featured-image" src="${escapeHtml(about.cover.src)}" alt="" style="object-position:${escapeHtml(about.cover.position)}">` : ''}<span class="featured-number">ABOUT</span><div><div class="featured-meta"><span>PERMANENT NOTE</span><span>${readingTime(about)} MIN</span></div><h3>${escapeHtml(about.title)}</h3>${excerpt(about)}<span class="featured-link">继续阅读 ↗</span></div>`;
   $('note-list').innerHTML = notes.slice(0, 4).map(note => `<article class="note-item"><time datetime="${note.date.replaceAll('.', '-')}T${note.time}">${note.date.slice(5)}</time><div><p>${note.html}</p><span>${escapeHtml(note.time)} · ${escapeHtml(note.context)}</span></div></article>`).join('');
-  $('article-list').innerHTML = `<div class="article-track-head" aria-hidden="true"><span>#</span><span>文章</span><span>分类</span><span>日期</span><span>时长</span><span></span></div>${posts.map((post, index) => `<a class="article-track" href="#post/${post.slug}"><span class="article-number">${String(index + 1).padStart(2, '0')}</span><div class="article-track-copy"><h3>${escapeHtml(post.title)}</h3><p>${escapeHtml(post.excerpt)}</p></div><div class="article-track-details"><span>${escapeHtml(post.category)}</span><time datetime="${post.date.replaceAll('.', '-')}">${escapeHtml(post.date)}</time><span>${readingTime(post)} MIN</span></div><span class="post-arrow" aria-hidden="true">↗</span></a>`).join('')}`;
+  $('article-list').innerHTML = `<div class="article-track-head" aria-hidden="true"><span>#</span><span>文章</span><span>分类</span><span>日期</span><span>时长</span><span></span></div>${posts.map((post, index) => `<a class="article-track" href="#post/${post.slug}"><span class="article-number">${String(index + 1).padStart(2, '0')}</span><div class="article-track-copy"><h3>${escapeHtml(post.title)}</h3>${excerpt(post)}</div><div class="article-track-details"><span>${escapeHtml(post.category)}</span><time datetime="${post.date.replaceAll('.', '-')}">${escapeHtml(post.date)}</time><span>${readingTime(post)} MIN</span></div><span class="post-arrow" aria-hidden="true">↗</span></a>`).join('')}`;
   $('archive-note-count').textContent = `${String(notes.length).padStart(2, '0')} NOTES`;
   $('archive-article-count').textContent = `${String(posts.length).padStart(2, '0')} ESSAYS`;
   $('archive-note-list').innerHTML = notes.map(note => `<article><time datetime="${note.date.replaceAll('.', '-')}T${note.time}">${note.date} · ${note.time}</time><p>${note.html}</p><span>${escapeHtml(note.context)}</span></article>`).join('');
-  $('archive-article-list').innerHTML = posts.map((post, index) => `<a href="#post/${post.slug}"><span>${String(index + 1).padStart(2, '0')}</span><div><div class="post-meta">${meta(post)}</div><h3>${escapeHtml(post.title)}</h3><p>${escapeHtml(post.excerpt)}</p></div><span class="post-arrow" aria-hidden="true">↗</span></a>`).join('');
+  $('archive-article-list').innerHTML = posts.map((post, index) => `<a href="#post/${post.slug}"><span>${String(index + 1).padStart(2, '0')}</span><div><div class="post-meta">${meta(post)}</div><h3>${escapeHtml(post.title)}</h3>${excerpt(post)}</div><span class="post-arrow" aria-hidden="true">↗</span></a>`).join('');
 }
 
 function route() {
@@ -42,7 +43,7 @@ function route() {
     if (post) {
       const next = posts[(posts.indexOf(post) + 1) % posts.length];
       document.title = `${post.title} · 日光之间`;
-      $('article-content').innerHTML = `<header class="article-header"><div class="post-meta">${meta(post)}<span>${aboutReading ? '固定文章' : '长文章'}</span></div><h1 tabindex="-1">${escapeHtml(post.title)}</h1><p class="article-deck">${escapeHtml(post.excerpt)}</p></header>${aboutReading ? coverImage(post, 'article-cover') : ''}<div class="article-body">${post.body}</div>`;
+      $('article-content').innerHTML = `<header class="article-header"><div class="post-meta">${meta(post)}<span>${aboutReading ? '固定文章' : '长文章'}</span></div><h1 tabindex="-1">${escapeHtml(post.title)}</h1>${excerpt(post, 'article-deck')}</header>${aboutReading ? coverImage(post, 'article-cover') : ''}<div class="article-body">${post.body}</div>`;
       $('next-post').hidden = aboutReading;
       if (aboutReading) {
         $('article-back').href = '#journal';

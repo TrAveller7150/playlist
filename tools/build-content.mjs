@@ -115,7 +115,7 @@ const notes = markdownFiles(path.join(contentRoot, 'notes')).map(readNote).filte
   .sort((a, b) => `${b.date} ${b.time}`.localeCompare(`${a.date} ${a.time}`));
 
 for (const article of [about, ...posts]) {
-  if (!article.title || !article.excerpt || !article.body) throw new Error(`Article ${article.slug} is missing title, excerpt, or body`);
+  if (!article.title || !article.body) throw new Error(`Article ${article.slug} is missing title or body`);
 }
 
 fs.mkdirSync(path.dirname(outputFile), { recursive: true });
