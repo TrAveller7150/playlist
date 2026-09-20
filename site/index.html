@@ -90,7 +90,7 @@
       <aside class="inventory-shelf">
         <div class="inventory-count"><span>COLLECTION / 7150</span><strong>01 <i>/ 08</i></strong></div>
         <div class="inventory-grid" aria-label="收藏物品">
-          <button class="inventory-item" id="inspect-knife" type="button" aria-label="检视短剑，大马士革钢">
+          <button class="inventory-item" id="inspect-knife" type="button" aria-label="选择短剑，大马士革钢" aria-pressed="true">
             <span class="inventory-slot-number">01</span>
             <img src="media/inventory/stiletto-damascus.png" alt="">
             <span class="inventory-item-copy"><small>STILETTO</small><strong>短剑</strong></span>
@@ -106,30 +106,28 @@
       </aside>
       <article class="inventory-detail">
         <div class="inventory-detail-meta"><span>ITEM 001</span><span>KNIFE / COVERT</span></div>
-        <div class="inventory-detail-visual" aria-hidden="true">
-          <span>01</span>
-          <img src="media/inventory/stiletto-damascus.png" alt="">
-        </div>
+        <div class="inventory-detail-visual" id="model-placeholder"></div>
         <div class="inventory-detail-copy">
           <span class="inventory-detail-label">ITEM NAME</span>
           <h2>短剑 <i>|</i> 大马士革钢</h2>
           <blockquote>“你给予的闪亮故事”</blockquote>
-          <p>来自 CS2 私人库存的一件收藏。网页中的低模版本依据游戏内截图重制，保留了大马士革钢纹理与刀柄上的私人刻字。</p>
+          <p>一把久经沙场的意大利折叠刀，出刃时清脆的响声以及轻盈的手感使其得到了主人的青睐。铭牌上的内容出自动画《摇曳百合》第三季第12话的片尾曲きみがくれたシャイニーストーリー（你给予的闪亮故事）。</p>
+          <p>终于，有这么一件无坚不摧的利器能与你无坚不摧的意志相得益彰</p>
           <dl>
-            <div><dt>来源</dt><dd>Counter-Strike 2</dd></div>
-            <div><dt>入藏</dt><dd>个人库存</dd></div>
-            <div><dt>网页模型</dt><dd>低面数 / 256 PX</dd></div>
+            <div><dt>入藏</dt><dd>2025.3.24</dd></div>
           </dl>
         </div>
         <footer class="inventory-status"><span>SELECTED / 01</span><span>TRAVELLER'S ARCHIVE</span></footer>
       </article>
     </section>
-    <section class="inspection-view" id="inspection-view" aria-label="物品检视" hidden>
+    <div class="inspection-background" aria-hidden="true"></div>
+    <section class="inspection-view" id="inspection-view" aria-label="物品模型" hidden>
       <canvas id="knife-canvas" aria-label="短剑三维模型"></canvas>
       <p class="inspection-loading" id="inspection-loading" role="status">读取藏品…</p>
-      <div class="inspection-name"><span>ITEM 001 / STILETTO</span><h2>短剑（★） | 大马士革钢</h2><p>“你给予的闪亮故事”</p></div>
-      <button class="inspection-back" id="inspection-back" type="button">← 返回收藏</button>
+      <button class="inspection-preview" id="inspection-preview" type="button" aria-label="详细检视短剑"></button>
     </section>
+    <div class="inspection-name" aria-hidden="true"><span>ITEM 001 / STILETTO</span><h2>短剑（★） | 大马士革钢</h2><p>“你给予的闪亮故事”</p></div>
+    <button class="inspection-back" id="inspection-back" type="button" hidden>← 返回物品栏</button>
   </dialog>
   <div class="music-player" id="music-player" aria-label="音乐播放器">
     <button id="music-drag" class="music-drag" aria-label="移动播放器（方向键可移动）" title="拖动播放器">⠿</button>

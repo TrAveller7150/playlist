@@ -486,32 +486,17 @@
   display: block;
   width: 100%;
   height: auto;
-  transition: filter 160ms ease, transform 160ms ease;
+  transition: filter 160ms ease;
   user-select: none;
   -webkit-user-drag: none;
 }
 
 .camp-crate-button:hover img,
 .camp-crate-button:focus-visible img {
-  filter: brightness(1.2) saturate(1.08) drop-shadow(0 0 7px #fff0afcc);
-  transform: translateY(-2px);
+  filter: brightness(1.24) saturate(1.08);
 }
 
 .camp-crate-button:focus-visible { outline: none; }
-
-.camp-crate-button::after {
-  content: '';
-  position: absolute;
-  inset: -5px;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  pointer-events: none;
-}
-
-.camp-crate-button:hover::after,
-.camp-crate-button:focus-visible::after {
-  border-color: #fff0af99;
-}
 
 .camp-fire-wrap {
   z-index: 6;
