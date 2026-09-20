@@ -1,6 +1,8 @@
 docs/*
 !docs/architecture.md
 node_modules/
+.idea/
+blender/
 content/.obsidian/workspace*.json
 content/.obsidian/cache/
 content/.trash/

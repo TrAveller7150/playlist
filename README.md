@@ -1,6 +1,6 @@
 # 日光之间
 
-以动态壁纸作为入口的个人博客。首页沿用用户提供的 Wallpaper Engine 场景 `2700262458`，内容区采用暖白和橄榄绿的简洁阅读布局。原画作者为 EB十，来源信息保留在原始 `project.json` 中。未修改原图或原始场景包。
+以动态壁纸作为入口的个人博客。首页沿用用户提供的 Wallpaper Engine 场景 `2700262458`，内容区采用暖白和橄榄绿的简洁阅读布局。原画作者为 EB十。运行时资源保留在 `site/assets/`；原始场景包已移出仓库并单独归档。
 
 ## 运行
 
@@ -21,7 +21,6 @@ content/                    Obsidian 仓库和 Markdown 内容源
   notes/                    碎碎念
   assets/covers/            文章封面与正文图片
   templates/                Obsidian 文章和碎碎念模板
-source/wallpaper-engine/    未修改的 Wallpaper Engine 原始文件
 tools/build-content.mjs     Markdown 内容构建脚本
 tools/wallpaper-engine/     从原始文件重建网页资源的工具
 docs/architecture.md        后续博客重建的架构决策
@@ -37,7 +36,7 @@ server.mjs                  本地静态服务器
 - 播放栏支持音量、静音、上一首和下一首；加号可以一次添加多首本地歌曲，仅有一首时切歌会重新播放当前曲目。
 - 文章使用 `content/` 中的本地 Markdown 编写。用 Obsidian 打开该目录作为仓库，启用核心插件“模板”，并将模板目录设为 `templates`；详细写作格式见 `content/README.md`。
 - `npm run build:content` 会读取 frontmatter、转换 Markdown，并把引用的本地图片复制到 `site/media/content/`。生成文件不要手工编辑。当前转换结果只面向可信的本地内容，不应直接接入未经清洗的公开投稿。
-- 长文章不显示封面，列表采用类似音乐歌单的固定列排布；正文中插入的 Markdown 图片与文字使用相同阅读宽度。只有 SIDE A 的固定“关于我”文章保留头图。示例素材已从 `ex_asset/` 选取并复制到 `content/assets/covers/`，原素材未修改。
+- 长文章不显示封面，列表采用类似音乐歌单的固定列排布；正文中插入的 Markdown 图片与文字使用相同阅读宽度。只有 SIDE A 的固定“关于我”文章保留头图。文章封面素材存放在 `content/assets/covers/`。
 - 检测到减少动态效果偏好时显示静止画面；首页离开视口、进入正文或切换后台时停止动态绘制。
 - 播放上限为 30 FPS，使用 GPU fence 防止高负载下渲染队列积压。实际帧率取决于显卡与浏览器。
 - 已移除原型的对照、调参、性能统计和快捷键界面。实验设计记录仍被 Git 忽略，最终架构记录在 `docs/architecture.md`。
@@ -63,7 +62,7 @@ server.mjs                  本地静态服务器
 
 生成的网页资源已经包含在 `site/assets/`，正常预览无需 Python。
 
-如需从原包重建，Python 需要 Pillow 与 lz4，然后运行 `npm run extract`。三个脚本分别负责包提取、无损纹理格式转换与模型解析。输入来自 `source/wallpaper-engine/2700262458/`，输出写入 `site/assets/`，不写回原包。
+如需从原包重建，先从外部归档恢复 `source/wallpaper-engine/2700262458/`，再安装 Pillow 与 lz4 并运行 `npm run extract`。三个脚本分别负责包提取、无损纹理格式转换与模型解析。输出写入 `site/assets/`，不写回原包。
 
 格式参考：
 
