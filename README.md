@@ -1,72 +1,91 @@
-# 日光之间
+# TrAveller7150's Playlist
 
-以动态壁纸作为入口的个人博客。首页沿用用户提供的 Wallpaper Engine 场景 `2700262458`，内容区采用暖白和橄榄绿的简洁阅读布局。原画作者为 EB十。运行时资源保留在 `site/assets/`；原始场景包已移出仓库并单独归档。
+一个以动态夏日封面为入口的个人博客，用来记录碎碎念、长文章、音乐，以及旅途中收集的小物件。
 
-## 运行
+网站当前是一个不依赖前端框架的静态站点：内容由本地 Markdown 构建，动态封面、播放器和藏品检视由浏览器端 JavaScript 负责。它优先服务于个人写作与展示，不提供账号、评论或后台管理功能。
 
-需要 Node.js。首次运行先执行 `npm install`，之后运行 `npm start`，打开 <http://127.0.0.1:5187>。启动时会先把 Markdown 内容构建为网站数据。
+## 当前内容
+
+- 动态封面：基于已整理的 Wallpaper Engine 场景资源制作。人物、花朵和背景保留独立层次；桌面端标题会位于人物与花朵之后，移动端使用独立排版。
+- 内容区：包含固定的“关于我”文章、最新碎碎念、长文章列表，以及两类独立归档。
+- 音乐播放器：默认播放本地 `summer-playlist.mp3`，支持播放、进度、音量、静音、切歌和临时加入本地音频。封面与内容区使用不同形态的播放器，但播放不会中断。
+- 营地：内容页底部的像素风营地包含站外链接与收藏箱。
+- 旅途收藏：目前收录短剑｜大马士革钢与 Ghostpia Season One NS 实体版。模型可在物品栏中预览，进入检视后可拖拽旋转，并可用右键或返回按钮回到物品栏。
+
+## 本地运行
+
+需要 Node.js 20 或更高版本。
+
+```bash
+npm install
+npm start
+```
+
+打开 <http://127.0.0.1:5187>。`npm start` 会先构建 Markdown 内容，再启动本地静态服务器；端口已被占用时，先停止已有服务器或调整 `server.mjs` 中的端口。
+
+只检查内容构建时运行：
+
+```bash
+npm run build
+```
+
+该命令等同于 `npm run build:content`，会生成 `site/data/content.js` 并把文章引用的本地图片复制到 `site/media/content/`。这两个输出均由脚本管理，不建议直接编辑。
+
+## 写作
+
+`content/` 可以直接作为 Obsidian Vault 打开，也可以使用任意 Markdown 编辑器。
+
+```text
+content/
+  about.md                 固定的“关于我”文章
+  notes/                   碎碎念
+  posts/                   长文章
+  assets/covers/           正文图片与固定文章头图
+  templates/               Obsidian 模板
+```
+
+写作格式、frontmatter 字段和模板使用方式见 [content/README.md](content/README.md)。保存内容后执行 `npm run build` 或重新执行 `npm start`，即可更新本地预览。
 
 ## 目录
 
 ```text
-site/                       当前可运行的静态网站
-  assets/                   壁纸图层、模型、字体和图标
-  data/content.js           由 Markdown 自动生成的内容数据
-  media/                    回退图片、本地音乐和构建后的文章图片
-  scripts/                  页面、播放器和 WebGL 代码
-  styles/                   页面样式
-content/                    Obsidian 仓库和 Markdown 内容源
-  about.md                  SIDE A 固定的“关于我”文章
-  posts/                    长文章
-  notes/                    碎碎念
-  assets/covers/            文章封面与正文图片
-  templates/                Obsidian 文章和碎碎念模板
-tools/build-content.mjs     Markdown 内容构建脚本
-tools/wallpaper-engine/     从原始文件重建网页资源的工具
-docs/architecture.md        后续博客重建的架构决策
-server.mjs                  本地静态服务器
+site/                      可部署的静态网站根目录
+  index.html               页面结构
+  assets/                  动态封面图层、字体和图标
+  data/                    Markdown 构建结果
+  media/                   音乐、文章图片、营地和收藏品资源
+  scripts/                 页面交互、播放器、内容与 Three.js 模型查看器
+  styles/                  页面样式
+  vendor/three/            随项目保存的 Three.js 运行时
+
+content/                   Markdown 内容源
+tools/build-content.mjs    内容构建脚本
+tools/wallpaper-engine/    动态封面资源解析工具
+tools/knife/               短剑模型与贴图生成工具
+tools/ghostpia/            Ghostpia 套装贴图与模型生成工具
+server.mjs                 本地静态服务器
+docs/architecture.md       后续迁移与同步的架构规划，不是当前实现
 ```
 
-- 首页：WebGL 2 实时绘制原包图层；加载中或不支持时显示原图。
-- SIDE A：固定的“关于我”文章与最新碎碎念；SIDE B：带封面的长文章。两个区域都至少占满一个视口，不使用额外的区间过渡装饰。
-- 碎碎念和长文章拥有各自独立的归档页；正文保留下一篇和阅读进度。
-- 播放器默认加载 `site/media/summer-playlist.mp3`，支持播放、暂停和拖动进度；浏览器限制自动播放时需点击播放。封面底部整排展示，内容区变为可拖动的右下角卡片，可收起为音乐球，播放不中断；也可选择本地音乐，所选文件不会上传。
-- 封面使用约半屏且距离一致的双向滚动阈值，内容上滑到顶部后固定不动，继续上滑填满顶部圆环才返回封面；两者不会同时露出。标题采用两行左对齐的本地 Inter Bold：桌面端位于人物及花朵图层之后形成真实遮挡，移动端使用上层纯白字避免内容被大面积遮住。播放器在各自位置淡出、淡入。减少动态效果偏好会禁用压暗与播放器动画。
-- 音量滑杆采用柔和线性范围：默认显示 50%，对应实际音量 14%；滑杆 100% 对应实际音量 28%。
-- 播放栏支持音量、静音、上一首和下一首；加号可以一次添加多首本地歌曲，仅有一首时切歌会重新播放当前曲目。
-- 文章使用 `content/` 中的本地 Markdown 编写。用 Obsidian 打开该目录作为仓库，启用核心插件“模板”，并将模板目录设为 `templates`；详细写作格式见 `content/README.md`。
-- `npm run build:content` 会读取 frontmatter、转换 Markdown，并把引用的本地图片复制到 `site/media/content/`。生成文件不要手工编辑。当前转换结果只面向可信的本地内容，不应直接接入未经清洗的公开投稿。
-- 长文章不显示封面，列表采用类似音乐歌单的固定列排布；正文中插入的 Markdown 图片与文字使用相同阅读宽度。只有 SIDE A 的固定“关于我”文章保留头图。文章封面素材存放在 `content/assets/covers/`。
-- 检测到减少动态效果偏好时显示静止画面；首页离开视口、进入正文或切换后台时停止动态绘制。
-- 播放上限为 30 FPS，使用 GPU fence 防止高负载下渲染队列积压。实际帧率取决于显卡与浏览器。
-- 已移除原型的对照、调参、性能统计和快捷键界面。实验设计记录仍被 Git 忽略，最终架构记录在 `docs/architecture.md`。
+## 收藏品与模型
 
-## 已迁移
+网页实际加载的模型位于 `site/media/inventory/`，并随 Git 提交。收藏品信息和模型参数定义在 `site/scripts/inventory.js`；模型加载、自动旋转和详细检视交互位于 `site/scripts/model-viewer.js`。
 
-- 从 PKGV0015 场景提取 78 个文件，转换 21 张图层 / 遮罩纹理。
-- 人物 MDLV0013 网格：2814 个顶点、18 根骨骼、6 秒原始动画。
-- 花朵网格：2990 个顶点、12 根骨骼、24 秒原始动画。
-- 原始权重、层次、绑定矩阵、平移 / Z 旋转 / XY 缩放关键帧和线性插值。
-- 使用原始纹理空间遮罩与参数重写 foliage sway、water waves、shake blink、iris、opacity 效果。
-- 按原场景图层顺序、位置和尺寸合成，使用透明混合。
+`blender/` 被 Git 忽略，用于保存参考图、Blender 源文件、渲染预览和中间贴图。需要重新生成现有模型时，可使用 `tools/knife/` 或 `tools/ghostpia/` 中的脚本；Ghostpia 脚本依赖放在本机 `blender/` 下的参考照片，因此全新克隆不会自动具备这些输入素材。
 
-## 还原边界
+## 技术说明
 
-这是针对这一份 2D 场景的移植，不是通用 Wallpaper Engine 播放器。骨骼数据中此场景使用的二维变换得以保留；没有实现通用三维骨骼旋转。
+- 内容构建：Node.js、`gray-matter` 与 `marked`。
+- 3D 藏品检视：Three.js、GLTFLoader 与 TrackballControls。
+- 样式与页面交互：原生 HTML、CSS 和 JavaScript。
+- 动态封面：WebGL 2；浏览器不支持或启用“减少动态效果”时会降级为静态画面。
 
-场景包引用的引擎内置噪声贴图和光束粒子资源没有包含在包内。当前用程序噪声近似花叶风场，以角向光束近似 God Rays / Light Shafts，并使用轻量胶片噪点。以上效果不是原引擎的逐像素还原。
+当前仓库尚未配置特定托管平台的生产构建或部署流程。`site/` 是最终静态资源目录，部署时应先运行 `npm run build`，再发布该目录及其内容。
 
-固定使用原始分辨率：场景 2560×1440，效果按原始纹理尺寸运行，GPU 负载较大。输出画布匹配设备像素比。浏览器使用 cover 裁切保持比例，竖屏会裁去两侧花田；不会凭空增加原始素材的细节。
+## 素材说明
 
-## 资源重建
+动态封面的原始美术作者为 EB十。Wallpaper Engine 场景、游戏角色与各类参考图片的权利仍归各自作者或权利人所有；本项目仅用于个人站点展示，不将原始场景包或未获授权的素材作为通用资源再分发。
 
-生成的网页资源已经包含在 `site/assets/`，正常预览无需 Python。
+## 后续规划
 
-如需从原包重建，先从外部归档恢复 `source/wallpaper-engine/2700262458/`，再安装 Pillow 与 lz4 并运行 `npm run extract`。三个脚本分别负责包提取、无损纹理格式转换与模型解析。输出写入 `site/assets/`，不写回原包。
-
-格式参考：
-
-- https://github.com/notscuffed/repkg （TEX 容器 / mipmap 布局）
-- https://github.com/Almamu/linux-wallpaperengine/blob/main/docs/rendering/MDL_FILES.md （MDL 网格 / 骨骼布局）
-
-特效数学依据用户提供的包内 shader 文件移植。素材及原 shader 的权利归原作者；这份实验不附带其再发布授权。
+[docs/architecture.md](docs/architecture.md) 记录了未来可能迁移到 Astro、接入 Bangumi 同步及 EdgeOne 部署的方案。这些内容尚未落地，当前维护与部署应以本 README 和现有 `package.json` 脚本为准。
