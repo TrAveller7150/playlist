@@ -391,6 +391,8 @@
 .camp-layer,
 .camp-object,
 .camp-sign,
+.camp-crate-button,
+.camp-vehicle-wrap,
 .camp-fire-wrap,
 .camp-fire-glow {
   position: absolute;
@@ -469,11 +471,46 @@
   width: clamp(280px, 29vw, 450px);
 }
 
-.camp-crate {
+.camp-crate-button {
   z-index: 6;
   left: 34%;
   bottom: var(--object-baseline);
   width: clamp(78px, 7.5vw, 116px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.camp-crate-button img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: filter 160ms ease, transform 160ms ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.camp-crate-button:hover img,
+.camp-crate-button:focus-visible img {
+  filter: brightness(1.2) saturate(1.08) drop-shadow(0 0 7px #fff0afcc);
+  transform: translateY(-2px);
+}
+
+.camp-crate-button:focus-visible { outline: none; }
+
+.camp-crate-button::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+.camp-crate-button:hover::after,
+.camp-crate-button:focus-visible::after {
+  border-color: #fff0af99;
 }
 
 .camp-fire-wrap {
@@ -518,11 +555,20 @@
 .camp-fire-wrap i:nth-of-type(2) { left: 38%; animation-delay: .9s; }
 .camp-fire-wrap i:nth-of-type(3) { left: 66%; animation-delay: 1.7s; }
 
-.camp-vehicle {
+.camp-vehicle-wrap {
   z-index: 6;
-  right: 10%;
+  right: 14%;
   bottom: var(--object-baseline);
   width: clamp(225px, 23vw, 360px);
+}
+
+.camp-vehicle {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .camp-sign {
@@ -690,7 +736,7 @@
     left: -2%;
     width: clamp(166px, 48vw, 196px);
   }
-  .camp-crate {
+  .camp-crate-button {
     left: 34%;
     width: clamp(48px, 13.5vw, 60px);
   }
@@ -702,10 +748,10 @@
     left: 50%;
     width: 150px;
   }
-  .camp-vehicle {
-    right: 9%;
+  .camp-vehicle-wrap {
+    right: 20%;
     left: auto;
-    width: clamp(124px, 35vw, 146px);
+    width: clamp(108px, 29vw, 120px);
   }
   .camp-sign {
     right: 0;
@@ -720,4 +766,6 @@
   .camp-cloud-track,
   .camp-fire-glow,
   .camp-fire-wrap i { animation: none; }
+
+  .camp-crate-button img { transition: none; }
 }

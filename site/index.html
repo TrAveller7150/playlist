@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/content.css">
   <link rel="stylesheet" href="styles/interactions.css">
+  <link rel="stylesheet" href="styles/inventory.css">
 </head>
 <body class="cover-mode">
   <a class="skip-link" href="#journal">跳到手记</a>
@@ -44,9 +45,13 @@
       <div class="camp-layer camp-mountains-near" aria-hidden="true"></div>
       <div class="camp-fire-glow" aria-hidden="true"></div>
       <img class="camp-object camp-tent" src="media/camp/tent.png" alt="" aria-hidden="true">
-      <img class="camp-object camp-crate" src="media/camp/crate.png" alt="" aria-hidden="true">
+      <button class="camp-crate-button" id="camp-crate-button" type="button" aria-label="打开收藏箱" title="打开收藏箱">
+        <img src="media/camp/crate.png" alt="" aria-hidden="true">
+      </button>
       <span class="camp-fire-wrap" aria-hidden="true"><img class="camp-object camp-fire" src="media/camp/fire.png" alt=""><i></i><i></i><i></i></span>
-      <img class="camp-object camp-vehicle" src="media/camp/sdkfz2.png" alt="" aria-hidden="true">
+      <div class="camp-vehicle-wrap">
+        <img class="camp-vehicle" src="media/camp/sdkfz2.png" alt="" aria-hidden="true">
+      </div>
       <div class="camp-sign">
         <img src="media/camp/signpost.png" alt="" aria-hidden="true">
         <nav class="camp-links" aria-label="我的其他主页">
@@ -76,6 +81,56 @@
       <div id="archive-article-list" class="archive-article-list"></div>
     </div>
   </main>
+  <dialog class="collection-overlay" id="collection-overlay" aria-labelledby="collection-title">
+    <header class="collection-header">
+      <div><span>FIELD CHEST / COLLECTION</span><h1 id="collection-title">旅途收藏</h1></div>
+      <button class="collection-close" id="collection-close" type="button" aria-label="关闭收藏" title="关闭">×</button>
+    </header>
+    <section class="inventory-view" id="inventory-view" aria-label="收藏物品栏">
+      <aside class="inventory-shelf">
+        <div class="inventory-count"><span>COLLECTION / 7150</span><strong>01 <i>/ 08</i></strong></div>
+        <div class="inventory-grid" aria-label="收藏物品">
+          <button class="inventory-item" id="inspect-knife" type="button" aria-label="检视短剑，大马士革钢">
+            <span class="inventory-slot-number">01</span>
+            <img src="media/inventory/stiletto-damascus.png" alt="">
+            <span class="inventory-item-copy"><small>STILETTO</small><strong>短剑</strong></span>
+          </button>
+          <span class="inventory-empty" aria-hidden="true"><i>02</i></span>
+          <span class="inventory-empty" aria-hidden="true"><i>03</i></span>
+          <span class="inventory-empty" aria-hidden="true"><i>04</i></span>
+          <span class="inventory-empty" aria-hidden="true"><i>05</i></span>
+          <span class="inventory-empty" aria-hidden="true"><i>06</i></span>
+          <span class="inventory-empty" aria-hidden="true"><i>07</i></span>
+          <span class="inventory-empty" aria-hidden="true"><i>08</i></span>
+        </div>
+      </aside>
+      <article class="inventory-detail">
+        <div class="inventory-detail-meta"><span>ITEM 001</span><span>KNIFE / COVERT</span></div>
+        <div class="inventory-detail-visual" aria-hidden="true">
+          <span>01</span>
+          <img src="media/inventory/stiletto-damascus.png" alt="">
+        </div>
+        <div class="inventory-detail-copy">
+          <span class="inventory-detail-label">ITEM NAME</span>
+          <h2>短剑 <i>|</i> 大马士革钢</h2>
+          <blockquote>“你给予的闪亮故事”</blockquote>
+          <p>来自 CS2 私人库存的一件收藏。网页中的低模版本依据游戏内截图重制，保留了大马士革钢纹理与刀柄上的私人刻字。</p>
+          <dl>
+            <div><dt>来源</dt><dd>Counter-Strike 2</dd></div>
+            <div><dt>入藏</dt><dd>个人库存</dd></div>
+            <div><dt>网页模型</dt><dd>低面数 / 256 PX</dd></div>
+          </dl>
+        </div>
+        <footer class="inventory-status"><span>SELECTED / 01</span><span>TRAVELLER'S ARCHIVE</span></footer>
+      </article>
+    </section>
+    <section class="inspection-view" id="inspection-view" aria-label="物品检视" hidden>
+      <canvas id="knife-canvas" aria-label="短剑三维模型"></canvas>
+      <p class="inspection-loading" id="inspection-loading" role="status">读取藏品…</p>
+      <div class="inspection-name"><span>ITEM 001 / STILETTO</span><h2>短剑（★） | 大马士革钢</h2><p>“你给予的闪亮故事”</p></div>
+      <button class="inspection-back" id="inspection-back" type="button">← 返回收藏</button>
+    </section>
+  </dialog>
   <div class="music-player" id="music-player" aria-label="音乐播放器">
     <button id="music-drag" class="music-drag" aria-label="移动播放器（方向键可移动）" title="拖动播放器">⠿</button>
     <button id="music-collapse" class="music-collapse" aria-label="缩小播放器" title="缩小播放器">−</button>
@@ -88,6 +143,7 @@
 <div class="music-tools"><span id="music-time">00:00 / 00:00</span><button id="music-mute" class="icon-button" aria-label="静音" title="静音"><img src="assets/icons/volume-2.svg" alt=""></button><input id="music-volume" type="range" min="0" max="1" step="0.01" value="0.5" aria-label="音量"><label class="music-file-label" title="添加本地歌曲"><img src="assets/icons/plus.svg" alt=""><input id="music-file" type="file" accept="audio/*" multiple aria-label="添加本地歌曲"></label></div>
     <audio id="audio" preload="metadata" src="media/summer-playlist.mp3" autoplay></audio><span id="music-status" class="sr-only" aria-live="polite"></span>
   </div>
-  <script type="module" src="scripts/blog.js"></script><script type="module" src="scripts/interactions.js"></script><script type="module" src="scripts/wallpaper.js"></script>
+  <script type="importmap">{"imports":{"three":"./vendor/three/three.module.min.js","three/addons/":"./vendor/three/addons/"}}</script>
+  <script type="module" src="scripts/blog.js"></script><script type="module" src="scripts/interactions.js"></script><script type="module" src="scripts/wallpaper.js"></script><script type="module" src="scripts/inventory.js"></script>
 </body>
 </html>
