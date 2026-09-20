@@ -13,6 +13,7 @@
 
 .collection-overlay::backdrop { background: #30342e88; }
 .collection-overlay[open] { animation: inventory-in 220ms ease-out; }
+.collection-overlay.is-closing { animation: inventory-out 220ms ease-in forwards; pointer-events: none; }
 .collection-open { overflow: hidden; }
 
 .collection-header {
@@ -152,6 +153,13 @@
   filter: drop-shadow(0 5px 5px #30362f44);
 }
 
+.inventory-item-box img {
+  top: 9%;
+  left: 17%;
+  width: 66%;
+  height: 57%;
+}
+
 .inventory-slot-number,
 .inventory-empty i {
   position: absolute;
@@ -260,10 +268,12 @@
   font: 400 15px/1.6 var(--serif);
 }
 
-.inventory-detail-copy > p {
+.inventory-detail-copy > p,
+.inventory-detail-copy #inventory-item-description p {
   margin: 0 0 22px;
   color: #5e665d;
   font: 400 14px/1.9 var(--serif);
+  white-space: pre-line;
 }
 
 .inventory-detail-copy dl { margin: 0; }
@@ -303,7 +313,7 @@
   pointer-events: none;
 }
 
-#knife-canvas {
+#collection-canvas {
   position: absolute;
   inset: 0;
   display: block;
@@ -327,12 +337,13 @@
   position: absolute;
   top: clamp(22px, 5vh, 54px);
   left: clamp(22px, 5vw, 76px);
-  max-width: min(430px, 72vw);
+  max-width: calc(100vw - 44px);
   pointer-events: none;
 }
 .inspection-name h2 {
   margin: 8px 0 5px;
   font: 400 clamp(22px, 3vw, 42px)/1.2 var(--serif);
+  white-space: nowrap;
 }
 .inspection-name p { margin: 0; color: #62695f; font: 400 13px var(--serif); }
 
@@ -353,6 +364,7 @@
 .inspection-back:focus-visible { border-color: #8f4f38; color: #8f4f38; outline: none; }
 
 @keyframes inventory-in { from { opacity: 0; } }
+@keyframes inventory-out { to { opacity: 0; } }
 
 .inventory-shelf,
 .inventory-detail-copy,

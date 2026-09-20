@@ -2,8 +2,8 @@ let viewer = null;
 let viewerRequest = 0;
 let inspecting = false;
 
-export async function createKnifeViewer(container, canvas, loading) {
-  destroyKnifeViewer();
+export async function createModelViewer(container, canvas, loading, item) {
+  destroyModelViewer();
   const request = ++viewerRequest;
   const [THREE, loaderModule, controlsModule] = await Promise.all([
     import('three'),
@@ -41,7 +41,7 @@ export async function createKnifeViewer(container, canvas, loading) {
   controls.maxDistance = 25;
   controls.target.set(0, 0, 0);
 
-  const gltf = await new loaderModule.GLTFLoader().loadAsync('media/inventory/stiletto-damascus.glb');
+  const gltf = await new loaderModule.GLTFLoader().loadAsync(item.model);
   if (request !== viewerRequest) {
     renderer.dispose();controls.dispose();
     return;
@@ -51,9 +51,10 @@ export async function createKnifeViewer(container, canvas, loading) {
   const size = bounds.getSize(new THREE.Vector3());
   const center = bounds.getCenter(new THREE.Vector3());
   model.position.sub(center);
-  const scale = 9.2 / Math.max(size.x, size.y, size.z);
-  model.scale.setScalar(scale);
-  const previewRotation = -.18;
+  const previewScale = (item.modelSize || 9.2) / Math.max(size.x, size.y, size.z);
+  const inspectionScale = previewScale * .8;
+  model.scale.setScalar(previewScale);
+  const previewRotation = item.previewRotation || 0;
   model.rotation.y = previewRotation;
   model.traverse(object => {
     if (!object.isMesh) return;
@@ -134,28 +135,30 @@ export async function createKnifeViewer(container, canvas, loading) {
     frame = requestAnimationFrame(render);
     if (viewer) viewer.frame = frame;
   };
-  viewer = { renderer, scene, controls, frame, resetPreview, finishReset };
+  viewer = { renderer, scene, controls, model, previewScale, inspectionScale, frame, resetPreview, finishReset };
   render(lastTime);
 }
 
-export function enterKnifeInspection() {
+export function enterModelInspection() {
   if (!viewer || inspecting) return false;
   inspecting = true;
   viewer.controls.enabled = true;
   viewer.finishReset();
+  viewer.model.scale.setScalar(viewer.inspectionScale);
   viewer.controls.noRotate = false;
   viewer.controls.noZoom = false;
   return true;
 }
 
-export function leaveKnifeInspection() {
+export function leaveModelInspection() {
   inspecting = false;
   if (!viewer) return;
   viewer.controls.enabled = false;
+  viewer.model.scale.setScalar(viewer.previewScale);
   viewer.resetPreview();
 }
 
-export function destroyKnifeViewer() {
+export function destroyModelViewer() {
   viewerRequest++;
   inspecting = false;
   if (!viewer) return;
