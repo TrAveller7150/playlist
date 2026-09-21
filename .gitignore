@@ -1,5 +1,4 @@
 docs/*
-!docs/architecture.md
 node_modules/
 .idea/
 blender/

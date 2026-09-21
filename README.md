@@ -64,7 +64,6 @@ tools/wallpaper-engine/    动态封面资源解析工具
 tools/knife/               短剑模型与贴图生成工具
 tools/ghostpia/            Ghostpia 套装贴图与模型生成工具
 server.mjs                 本地静态服务器
-docs/architecture.md       后续迁移与同步的架构规划，不是当前实现
 ```
 
 ## 收藏品与模型
@@ -85,7 +84,3 @@ docs/architecture.md       后续迁移与同步的架构规划，不是当前�
 ## 素材说明
 
 动态封面的原始美术作者为 EB十。Wallpaper Engine 场景、游戏角色与各类参考图片的权利仍归各自作者或权利人所有；本项目仅用于个人站点展示，不将原始场景包或未获授权的素材作为通用资源再分发。
-
-## 后续规划
-
-[docs/architecture.md](docs/architecture.md) 记录了未来可能迁移到 Astro、接入 Bangumi 同步及 EdgeOne 部署的方案。这些内容尚未落地，当前维护与部署应以本 README 和现有 `package.json` 脚本为准。
