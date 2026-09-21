@@ -40,19 +40,19 @@ function route() {
   if (reading) {
     const post = aboutReading ? about : posts.find(item => `post/${item.slug}` === hash);
     if (post) {
-      const next = posts[(posts.indexOf(post) + 1) % posts.length];
-      document.title = `${post.title} · 日光之间`;
+      const next = !aboutReading && posts.length > 1 ? posts[(posts.indexOf(post) + 1) % posts.length] : null;
+      document.title = `${post.title} · TrAveller7150's Playlist`;
       $('article-content').innerHTML = `<header class="article-header"><div class="post-meta">${meta(post)}<span>${aboutReading ? '固定文章' : '长文章'}</span></div><h1 tabindex="-1">${escapeHtml(post.title)}</h1>${excerpt(post, 'article-deck')}</header>${aboutReading ? coverImage(post, 'article-cover') : ''}<div class="article-body">${post.body}</div>`;
-      $('next-post').hidden = aboutReading;
+      $('next-post').hidden = !next;
       if (aboutReading) {
         $('article-back').href = '#journal';
         $('article-back').textContent = '← 返回主页（内容区）';
-      } else {
+      } else if (next) {
         $('next-post').href = `#post/${next.slug}`;
         $('next-post').innerHTML = `<span>下一篇 / KEEP WANDERING</span>${escapeHtml(next.title)} ↗`;
       }
     } else {
-      document.title = '手记未找到 · 日光之间';
+      document.title = "手记未找到 · TrAveller7150's Playlist";
       $('article-content').innerHTML = '<div class="not-found"><h1 tabindex="-1">这一页，还没有写下。</h1><p>回到手记，看看别的故事吧。</p></div>';
       $('next-post').hidden = true;
     }

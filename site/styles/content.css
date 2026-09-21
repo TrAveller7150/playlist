@@ -165,7 +165,8 @@
 .section-more:hover .section-more-arrow,
 .archive-note a:hover span { transform: translateX(3px); }
 
-.archive-page .site-header nav a:not(.archive-link) { display: none; }
+.archive-page .site-header nav a:not(.archive-link),
+.reading .site-header nav a:not(.archive-link) { display: none; }
 .journal,
 .articles {
   min-height: 100svh;

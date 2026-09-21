@@ -69,7 +69,9 @@ function markdownFiles(directory) {
 }
 
 function readArticle(file) {
-  const parsed = matter(fs.readFileSync(file, 'utf8'));
+  const source = fs.readFileSync(file, 'utf8');
+  if (!source.trim()) return null;
+  const parsed = matter(source);
   if (parsed.data.draft === true) return null;
   const slug = String(parsed.data.slug || path.basename(file, '.md')).replace(/^\d{4}-\d{2}-\d{2}-/, '');
   if (!/^[a-z0-9-]+$/.test(slug)) throw new Error(`Invalid slug in ${path.relative(root, file)}: ${slug}`);
