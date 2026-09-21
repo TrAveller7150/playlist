@@ -10,19 +10,33 @@ let visible = true, time = 0, last = 0;
 let layers = [], sceneTarget, finalProgram, meshProgram, effectProgram, quad;
 let frameFence = null, lastDraw = 0;
 let titleTexture, titleQuad, titleSize = '';
-let loadProgress = 0;
+let loadProgress = 0, displayedProgress = 0, progressAnimation = 0;
+
+function renderLoadProgress() {
+  const target = loadProgress * 100;
+  if (reducedMotion.matches) displayedProgress = target;
+  else displayedProgress += Math.max(.35, (target - displayedProgress) * .18);
+  if (target - displayedProgress < .45) displayedProgress = target;
+  const percent = Math.round(displayedProgress);
+  loaderProgress.setAttribute('aria-valuenow', String(percent));
+  loaderValue.textContent = `${String(percent).padStart(2, '0')}%`;
+  progressAnimation = displayedProgress < target ? requestAnimationFrame(renderLoadProgress) : 0;
+}
 
 function updateLoadProgress(value) {
   loadProgress = Math.max(loadProgress, Math.min(1, value));
-  const percent = Math.round(loadProgress * 100);
   loader.style.setProperty('--loader-progress', loadProgress);
-  loaderProgress.setAttribute('aria-valuenow', String(percent));
-  loaderValue.textContent = String(percent).padStart(2, '0');
+  if (!progressAnimation) progressAnimation = requestAnimationFrame(renderLoadProgress);
 }
 const waitForPaint = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+const waitForLoadProgress = () => displayedProgress >= 100 ? Promise.resolve() : new Promise(resolve => {
+  const check = () => displayedProgress >= 100 ? resolve() : requestAnimationFrame(check);
+  requestAnimationFrame(check);
+});
 async function revealCover() {
   updateLoadProgress(1);
   document.body.classList.add('cover-ready');
+  await waitForLoadProgress();
   await waitForPaint();
   loader.classList.add('is-finished');
   loader.setAttribute('aria-hidden', 'true');
