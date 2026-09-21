@@ -8,10 +8,12 @@ from mathutils import Vector
 
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / 'knife' / 'output'
+TOOL = Path(__file__).resolve().parent
+ASSETS = TOOL / 'assets'
+OUT = TOOL / 'output'
 OUT.mkdir(parents=True, exist_ok=True)
 original = ROOT / 'knife.blend'
-backup = ROOT / 'knife' / 'source-empty.blend'
+backup = ASSETS / 'source-empty.blend'
 if original.exists() and not backup.exists():
     shutil.copy2(original, backup)
 
@@ -20,7 +22,7 @@ bpy.ops.object.delete(use_global=False)
 for material in list(bpy.data.materials):
     bpy.data.materials.remove(material)
 
-atlas = bpy.data.images.load(str(OUT / 'stiletto-atlas.png'), check_existing=True)
+atlas = bpy.data.images.load(str(ASSETS / 'stiletto-atlas.png'), check_existing=True)
 atlas.pack()
 model = bpy.data.collections.new('Stiletto - Damascus')
 bpy.context.scene.collection.children.link(model)

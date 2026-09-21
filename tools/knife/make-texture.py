@@ -6,8 +6,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / 'knife' / 'output'
-OUT.mkdir(parents=True, exist_ok=True)
+ASSETS = Path(__file__).resolve().parent / 'assets'
+ASSETS.mkdir(parents=True, exist_ok=True)
 rng = random.Random(7150)
 image = Image.new('RGB', (256, 256), (62, 65, 63))
 pixels = image.load()
@@ -55,5 +55,5 @@ font = ImageFont.truetype('C:/Windows/Fonts/msyh.ttc', 21)
 caption = '\u4f60\u7ed9\u4e88\u7684\u95ea\u4eae\u6545\u4e8b'
 for i, character in enumerate(caption):
     draw.text((240, 27 + i * 27), character, font=font, anchor='mm', fill=(212, 210, 192), stroke_width=0)
-image.save(OUT / 'stiletto-atlas.png')
-print(OUT / 'stiletto-atlas.png')
+image.save(ASSETS / 'stiletto-atlas.png')
+print(ASSETS / 'stiletto-atlas.png')

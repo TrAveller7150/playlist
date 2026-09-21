@@ -2,6 +2,8 @@ docs/*
 node_modules/
 .idea/
 blender/
+tools/knife/output/
+__pycache__/
 content/.obsidian/workspace*.json
 content/.obsidian/cache/
 content/.trash/

@@ -70,7 +70,7 @@ server.mjs                 本地静态服务器
 
 网页实际加载的模型位于 `site/media/inventory/`，并随 Git 提交。收藏品信息和模型参数定义在 `site/scripts/inventory.js`；模型加载、自动旋转和详细检视交互位于 `site/scripts/model-viewer.js`。
 
-`blender/` 被 Git 忽略，用于保存参考图、Blender 源文件、渲染预览和中间贴图。需要重新生成现有模型时，可使用 `tools/knife/` 或 `tools/ghostpia/` 中的脚本；Ghostpia 脚本依赖放在本机 `blender/` 下的参考照片，因此全新克隆不会自动具备这些输入素材。
+`blender/` 被 Git 忽略，用于保存参考图、Blender 源文件、渲染预览和中间贴图。短剑工具保留的 `.blend` 备份与贴图位于 `tools/knife/assets/`，生成产物位于被忽略的 `tools/knife/output/`。需要重新生成现有模型时，可使用 `tools/knife/` 或 `tools/ghostpia/` 中的脚本；Ghostpia 脚本依赖放在本机 `blender/` 下的参考照片，因此全新克隆不会自动具备这些输入素材。
 
 ## 技术说明
 
