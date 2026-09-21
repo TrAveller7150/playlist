@@ -5,8 +5,7 @@ import struct
 from PIL import Image, ImageDraw, ImageFont
 
 
-ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / 'knife' / 'output'
+OUT = Path(__file__).resolve().parent / 'output'
 sheet = Image.new('RGB', (1280, 1080), '#e7e7df')
 draw = ImageDraw.Draw(sheet)
 font = ImageFont.truetype('C:/Windows/Fonts/segoeui.ttf', 17)
