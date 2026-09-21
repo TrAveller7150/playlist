@@ -2,6 +2,7 @@ import { setCompactMode } from './player.js';
 
 const hero = document.getElementById('hero');
 const cover = document.querySelector('.cover-shell');
+const camp = document.getElementById('camp');
 const returnIndicator = document.getElementById('return-progress');
 let contentMode = false, returnDistance = 0, touchY = null;
 const transitionDistance = () => Math.max(1, cover.offsetHeight);
@@ -52,6 +53,17 @@ function scheduleScene() {
   if (pending) return;
   pending = true;
   requestAnimationFrame(() => { pending = false;updateScene(); });
+}
+
+if ('IntersectionObserver' in window) {
+  const campObserver = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) return;
+    camp.classList.add('assets-ready');
+    campObserver.disconnect();
+  }, { rootMargin: '600px 0px' });
+  campObserver.observe(camp);
+} else {
+  camp.classList.add('assets-ready');
 }
 
 window.addEventListener('wheel', event => {

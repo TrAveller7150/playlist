@@ -75,18 +75,18 @@
   inset: auto 0 calc(var(--ground-depth) + 14%);
   width: 100%;
   height: 34%;
-  background: url('../media/camp/mountains-far.png') center bottom / auto 100% repeat-x;
   image-rendering: pixelated;
 }
+.campsite.assets-ready .camp-mountains-far { background: url('../media/camp/mountains-far.png') center bottom / auto 100% repeat-x; }
 
 .camp-mountains-near {
   z-index: 3;
   inset: auto 0 calc(var(--ground-depth) - var(--ground-lift) - 3px);
   width: 100%;
   height: 50%;
-  background: url('../media/camp/mountains-near.png') center bottom / auto 100% repeat-x;
   image-rendering: pixelated;
 }
+.campsite.assets-ready .camp-mountains-near { background: url('../media/camp/mountains-near.png') center bottom / auto 100% repeat-x; }
 
 .camp-ground {
   z-index: 5;

@@ -166,4 +166,6 @@ for (const control of [handle, orb]) {
 
 window.addEventListener('resize', () => { if (compact && position) place(position.x, position.y); });
 audio.volume = volumeCeiling * .5;
-volumeState();audioState();play(true);
+volumeState();audioState();
+if (document.body.classList.contains('cover-ready')) play(true);
+else window.addEventListener('cover-ready', () => play(true), { once: true });

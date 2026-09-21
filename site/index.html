@@ -6,13 +6,22 @@
   <meta name="theme-color" content="#f5f3eb">
   <meta name="description" content="TrAveller7150's Playlist，一本关于生活、音乐和缓慢日常的私人手记。">
   <title>TrAveller7150's Playlist</title>
+  <link rel="preload" href="assets/textures/bg%20fix%202.png" as="image" fetchpriority="high">
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/content.css">
   <link rel="stylesheet" href="styles/camp.css">
   <link rel="stylesheet" href="styles/interactions.css">
   <link rel="stylesheet" href="styles/inventory.css">
 </head>
-<body class="cover-mode">
+<body class="cover-mode is-loading">
+  <div class="cover-loader" id="cover-loader" role="status" aria-label="正在准备动态封面">
+    <div class="cover-loader-inner">
+      <span class="cover-loader-brand">TrAveller7150's</span>
+      <strong>Playlist</strong>
+      <div class="cover-loader-progress" id="cover-loader-progress" role="progressbar" aria-label="封面加载进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+      <div class="cover-loader-meta"><span>PREPARING COVER</span><span id="cover-loader-value" aria-hidden="true">00</span></div>
+    </div>
+  </div>
   <a class="skip-link" href="#journal">跳到手记</a>
   <div id="return-progress" class="return-progress" role="progressbar" aria-label="返回封面" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span aria-hidden="true">↑</span></div>
   <header class="site-header" id="header">
@@ -41,27 +50,27 @@
       <div class="archive-note"><span>ARCHIVE / <span id="archive-year"></span></span><a href="#archive">全部长文章 <span>↗</span></a></div>
     </section>
     <section class="campsite" id="camp" aria-label="山间营地与站外链接">
-      <div class="camp-layer camp-clouds" aria-hidden="true"><div class="camp-cloud-track"><img src="media/camp/clouds-loop.png" alt=""><img src="media/camp/clouds-loop.png" alt=""><img src="media/camp/clouds-loop.png" alt=""><img src="media/camp/clouds-loop.png" alt=""></div></div>
+      <div class="camp-layer camp-clouds" aria-hidden="true"><div class="camp-cloud-track"><img src="media/camp/clouds-loop.png" alt="" loading="lazy" decoding="async"><img src="media/camp/clouds-loop.png" alt="" loading="lazy" decoding="async"><img src="media/camp/clouds-loop.png" alt="" loading="lazy" decoding="async"><img src="media/camp/clouds-loop.png" alt="" loading="lazy" decoding="async"></div></div>
       <div class="camp-layer camp-mountains-far" aria-hidden="true"></div>
       <div class="camp-layer camp-mountains-near" aria-hidden="true"></div>
       <div class="camp-fire-glow" aria-hidden="true"></div>
-      <img class="camp-object camp-tent" src="media/camp/tent.png" alt="" aria-hidden="true">
+      <img class="camp-object camp-tent" src="media/camp/tent.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
       <button class="camp-crate-button" id="camp-crate-button" type="button" aria-label="打开收藏箱" title="打开收藏箱">
-        <img src="media/camp/crate.png" alt="" aria-hidden="true">
+        <img src="media/camp/crate.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
       </button>
-      <span class="camp-fire-wrap" aria-hidden="true"><img class="camp-object camp-fire" src="media/camp/fire.png" alt=""><i></i><i></i><i></i></span>
+      <span class="camp-fire-wrap" aria-hidden="true"><img class="camp-object camp-fire" src="media/camp/fire.png" alt="" loading="lazy" decoding="async"><i></i><i></i><i></i></span>
       <div class="camp-vehicle-wrap">
-        <img class="camp-vehicle" src="media/camp/sdkfz2.png" alt="" aria-hidden="true">
+        <img class="camp-vehicle" src="media/camp/sdkfz2.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
       </div>
       <div class="camp-sign">
-        <img src="media/camp/signpost.png" alt="" aria-hidden="true">
+        <img src="media/camp/signpost.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
         <nav class="camp-links" aria-label="我的其他主页">
           <a class="camp-link camp-link-one" href="https://bangumi.tv/user/traveller7150" target="_blank" rel="noreferrer">BANGUMI</a>
           <a class="camp-link camp-link-two" href="https://github.com/TrAveller7150" target="_blank" rel="noreferrer">GITHUB</a>
           <a class="camp-link camp-link-three" href="https://steamcommunity.com/profiles/76561198902190746/" target="_blank" rel="noreferrer">STEAM</a>
         </nav>
       </div>
-      <img class="camp-layer camp-ground" src="media/camp/ground.png" alt="" aria-hidden="true">
+      <img class="camp-layer camp-ground" src="media/camp/ground.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
     </section>
   </main>
   <main id="article-view" hidden><div class="reading-progress" id="reading-progress"></div><article class="article-shell"><a id="article-back" href="#journal" class="article-back">← 返回手记</a><div id="article-content"></div><a id="next-post" class="next-post"></a><footer class="article-footer"><span>TrAveller7150's Playlist</span><span>Powered by Markdown, Git &amp; JavaScript</span></footer></article></main>
@@ -90,12 +99,12 @@
         <div class="inventory-grid" aria-label="收藏物品">
           <button class="inventory-item" id="inspect-knife" type="button" aria-label="选择短剑，大马士革钢" aria-pressed="true">
             <span class="inventory-slot-number">01</span>
-            <img src="media/inventory/stiletto-damascus.png" alt="">
+            <img src="media/inventory/stiletto-damascus.png" alt="" loading="lazy" decoding="async">
             <span class="inventory-item-copy"><small>STILETTO</small><strong>短剑</strong></span>
           </button>
           <button class="inventory-item inventory-item-box" id="inspect-ghostpia" type="button" aria-label="选择 Ghostpia Season One 限定版" aria-pressed="false">
             <span class="inventory-slot-number">02</span>
-            <img src="media/inventory/ghostpia-limited.png" alt="">
+            <img src="media/inventory/ghostpia-limited.png" alt="" loading="lazy" decoding="async">
             <span class="inventory-item-copy"><small>ghostpia Season One</small><strong>游戏卡带套装</strong></span>
           </button>
           <span class="inventory-empty" aria-hidden="true"><i>03</i></span>
@@ -140,7 +149,7 @@
     <div class="transport"><button id="music-prev" class="icon-button" aria-label="上一首" title="上一首"><img src="assets/icons/skip-back.svg" alt=""></button><button id="music-play" class="music-play" aria-label="播放音乐" title="播放"><img src="assets/icons/play.svg" alt=""></button><button id="music-next" class="icon-button" aria-label="下一首" title="下一首"><img src="assets/icons/skip-forward.svg" alt=""></button></div>
     <input id="music-seek" type="range" min="0" max="100" step="0.01" value="0" aria-label="音乐播放进度" disabled>
 <div class="music-tools"><span id="music-time">00:00 / 00:00</span><button id="music-mute" class="icon-button" aria-label="静音" title="静音"><img src="assets/icons/volume-2.svg" alt=""></button><input id="music-volume" type="range" min="0" max="1" step="0.01" value="0.5" aria-label="音量"><label class="music-file-label" title="添加本地歌曲"><img src="assets/icons/plus.svg" alt=""><input id="music-file" type="file" accept="audio/*" multiple aria-label="添加本地歌曲"></label></div>
-    <audio id="audio" preload="metadata" src="media/summer-playlist.mp3" autoplay></audio><span id="music-status" class="sr-only" aria-live="polite"></span>
+    <audio id="audio" preload="metadata" src="media/summer-playlist.mp3"></audio><span id="music-status" class="sr-only" aria-live="polite"></span>
   </div>
   <script type="importmap">{"imports":{"three":"./vendor/three/three.module.min.js","three/addons/":"./vendor/three/addons/"}}</script>
   <script type="module" src="scripts/blog.js"></script><script type="module" src="scripts/interactions.js"></script><script type="module" src="scripts/wallpaper.js"></script><script type="module" src="scripts/inventory.js"></script>

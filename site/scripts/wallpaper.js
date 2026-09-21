@@ -1,11 +1,40 @@
 const $ = id => document.getElementById(id);
 const canvas = $('wallpaper');
+const hero = $('hero');
+const loader = $('cover-loader');
+const loaderProgress = $('cover-loader-progress');
+const loaderValue = $('cover-loader-value');
 const gl = canvas.getContext('webgl2', { alpha: false, antialias: false });
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let visible = true, time = 0, last = 0;
 let layers = [], sceneTarget, finalProgram, meshProgram, effectProgram, quad;
 let frameFence = null, lastDraw = 0;
 let titleTexture, titleQuad, titleSize = '';
+let loadProgress = 0;
+
+function updateLoadProgress(value) {
+  loadProgress = Math.max(loadProgress, Math.min(1, value));
+  const percent = Math.round(loadProgress * 100);
+  loader.style.setProperty('--loader-progress', loadProgress);
+  loaderProgress.setAttribute('aria-valuenow', String(percent));
+  loaderValue.textContent = String(percent).padStart(2, '0');
+}
+const waitForPaint = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+async function revealCover() {
+  updateLoadProgress(1);
+  document.body.classList.add('cover-ready');
+  await waitForPaint();
+  loader.classList.add('is-finished');
+  loader.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('is-loading');
+  window.dispatchEvent(new Event('cover-ready'));
+}
+async function loadFallback() {
+  hero.classList.add('wallpaper-fallback');
+  const image = new Image();
+  image.src = 'media/sunflower.jpg';
+  try { await image.decode(); } catch {}
+}
 
 function updateTitleTexture() {
   const w = canvas.clientWidth, h = canvas.clientHeight;
@@ -146,7 +175,14 @@ async function loadTexture(name) {
   })());
   return textures.get(name);
 }
-async function json(url) { const r = await fetch(url);if (!r.ok) throw new Error(url);return r.json(); }
+const jsonFiles = new Map();
+function json(url) {
+  if (!jsonFiles.has(url)) jsonFiles.set(url, fetch(url).then(response => {
+    if (!response.ok) throw new Error(url);
+    return response.json();
+  }));
+  return jsonFiles.get(url);
+}
 const vec = s => s.split(' ').map(Number);
 const mul = (a, b) => [a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3],a[0]*b[4]+a[2]*b[5]+a[4],a[1]*b[4]+a[3]*b[5]+a[5]];
 const inverse = a => {const d=a[0]*a[3]-a[1]*a[2];return [a[3]/d,-a[1]/d,-a[2]/d,a[0]/d,(a[2]*a[5]-a[3]*a[4])/d,(a[1]*a[4]-a[0]*a[5])/d];};
@@ -177,16 +213,22 @@ function skin(layer, t) {
 async function loadLayer(object) {
   const model = await json(`assets/scene/${object.image}`);
   const material = await json(`assets/scene/${model.material}`);
-  const image = await loadTexture(material.passes[0].textures[0]);
-  const layer = { object, image, origin: vec(object.origin), effects: [] };
-  for (const e of object.effects || []) {
+  const effectRequests = (object.effects || []).map(async e => {
     const pass=e.passes[0];const name=e.file.split('/')[1];
-    const mask=pass.textures?.[1]?.startsWith('masks/')?await loadTexture(pass.textures[1]):null;
-    const mask2=pass.textures?.[3]?.startsWith('masks/')?await loadTexture(pass.textures[3]):null;
-    layer.effects.push({ name, values:pass.constantshadervalues||{}, combos:pass.combos||{}, mask, mask2 });
-  }
-  if (model.puppet) {
-    layer.model=await json(`assets/models/${object.name}.json`);
+    const [mask, mask2] = await Promise.all([
+      pass.textures?.[1]?.startsWith('masks/') ? loadTexture(pass.textures[1]) : null,
+      pass.textures?.[3]?.startsWith('masks/') ? loadTexture(pass.textures[3]) : null
+    ]);
+    return { name, values:pass.constantshadervalues||{}, combos:pass.combos||{}, mask, mask2 };
+  });
+  const [image, effects, puppet] = await Promise.all([
+    loadTexture(material.passes[0].textures[0]),
+    Promise.all(effectRequests),
+    model.puppet ? json(`assets/models/${object.name}.json`) : null
+  ]);
+  const layer = { object, image, origin: vec(object.origin), effects };
+  if (puppet) {
+    layer.model=puppet;
     const worlds=[];
     layer.inverseBind=layer.model.bones.map((b,i)=>{const m=b.matrix;const a=[m[0],m[1],m[4],m[5],m[12],m[13]];worlds[i]=b.parent<0?a:mul(worlds[b.parent],a);return inverse(worlds[i]);});
     layer.geo=geometry(new Float32Array(layer.model.vertices.length*4),layer.model.indices);skin(layer,0);
@@ -245,9 +287,10 @@ function tick(now){
 new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;if(visible&&layers.length&&reducedMotion.matches)render();},{threshold:0}).observe($('hero'));
 window.addEventListener('resize',()=>{if(layers.length&&visible)render();});
 document.addEventListener('visibilitychange',()=>{last=0;});
-canvas.addEventListener('webglcontextlost',()=>{canvas.style.opacity='0';$('hero').classList.remove('title-composited');});
+canvas.addEventListener('webglcontextlost',()=>{canvas.style.opacity='0';hero.classList.remove('title-composited');hero.classList.add('wallpaper-fallback');});
 
 try{
+  updateLoadProgress(.03);
   if(!gl)throw new Error('当前浏览器不支持 WebGL 2，请使用较新的浏览器。');
   meshProgram=program(vertex,`#version 300 es\nprecision highp float;in vec2 uv;out vec4 color;uniform sampler2D source;void main(){color=texture(source,uv);}`);
   effectProgram=program(vertex,fragment);finalProgram=program(vertex,finalFragment);
@@ -255,9 +298,20 @@ try{
   titleQuad=geometry(new Float32Array([-1,-1,0,1,1,-1,1,1,-1,1,0,0,1,1,1,0]),[0,1,2,2,1,3]);
   sceneTarget=target(2560,1440);
   const scene=await json('assets/scene/scene.json');
-  // Keep GPU allocation sequential: image uploads mutate the active texture unit.
-  for(const object of scene.objects.filter(o=>o.image&&o.origin))layers.push(await loadLayer(object));
+  updateLoadProgress(.12);
+  const objects=scene.objects.filter(o=>o.image&&o.origin);
+  let loaded=0;
+  layers=await Promise.all(objects.map(async object=>{
+    const layer=await loadLayer(object);
+    updateLoadProgress(.12+(++loaded/objects.length)*.74);
+    return layer;
+  }));
   await document.fonts.ready;
-  render();canvas.classList.add('ready');$('hero').classList.add('title-composited');
+  updateLoadProgress(.92);
+  render();canvas.classList.add('ready');hero.classList.add('title-composited');
   requestAnimationFrame(tick);
-}catch(error){console.error(error);canvas.style.opacity='0';$('hero').classList.remove('title-composited');}
+  await revealCover();
+}catch(error){
+  console.error(error);canvas.style.opacity='0';hero.classList.remove('title-composited');
+  updateLoadProgress(.9);await loadFallback();await revealCover();
+}
