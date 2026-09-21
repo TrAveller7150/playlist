@@ -79,7 +79,24 @@ server.mjs                 本地静态服务器
 - 样式与页面交互：原生 HTML、CSS 和 JavaScript。
 - 动态封面：WebGL 2；浏览器不支持或启用“减少动态效果”时会降级为静态画面。
 
-当前仓库尚未配置特定托管平台的生产构建或部署流程。`site/` 是最终静态资源目录，部署时应先运行 `npm run build`，再发布该目录及其内容。
+## 部署到 EdgeOne Pages
+
+本站是纯静态站点。`server.mjs` 只用于本地预览，EdgeOne 不需要运行它；部署时由构建命令生成内容，再发布 `site/` 目录。
+
+在 EdgeOne Pages 创建项目并关联 GitHub 仓库 `TrAveller7150/playlist` 后，使用以下构建设置：
+
+```text
+框架预设：Other / Static
+根目录：./
+安装命令：npm ci
+构建命令：npm run build
+输出目录：site
+Node.js：20.x
+```
+
+首次部署成功后，使用 Pages 项目提供的临时域名检查首页、音乐播放、文章图片和收藏品模型。接入自定义域名时，在 EdgeOne 控制台添加域名，并按页面显示的记录值配置 DNS；不要预先猜测 CNAME 地址。本站使用 hash 路由，不需要额外配置单页应用重写规则。
+
+之后的发布流程是：修改 `content/` 或网站资源，执行 `npm run build` 本地检查，提交并推送到 `main`。EdgeOne 会自动拉取并重新部署。若上线后文章更新未及时出现，在 EdgeOne 中对 `index.html` 与 `data/content.js` 刷新或清除缓存即可。
 
 ## 素材说明
 
