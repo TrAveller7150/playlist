@@ -144,7 +144,7 @@
 
 .inventory-item img {
   position: absolute;
-  top: 18%;
+  top: 23%;
   left: 6%;
   width: 88%;
   height: 42%;
@@ -154,10 +154,18 @@
 }
 
 .inventory-item-box img {
-  top: 9%;
+  top: 14%;
   left: 17%;
   width: 66%;
   height: 57%;
+}
+
+.inventory-item-book img {
+  top: 10%;
+  left: 22%;
+  width: 56%;
+  height: 63%;
+  image-rendering: auto;
 }
 
 .inventory-slot-number,
@@ -171,13 +179,6 @@
 }
 
 .inventory-item-copy { position: relative; z-index: 1; }
-.inventory-item-copy small {
-  display: block;
-  margin-bottom: 3px;
-  color: #8f4f38;
-  font: 600 8px var(--meta-font);
-  letter-spacing: .05em;
-}
 .inventory-item-copy strong {
   display: block;
   overflow-wrap: anywhere;
@@ -480,7 +481,6 @@
   .inventory-empty::before { inset: 4px; }
   .inventory-slot-number,
   .inventory-empty i { top: 8px; left: 8px; font-size: 8px; }
-  .inventory-item-copy small { display: none; }
   .inventory-item-copy strong { font-size: 12px; }
   .inventory-detail {
     order: -1;

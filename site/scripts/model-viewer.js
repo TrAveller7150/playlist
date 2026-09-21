@@ -1,15 +1,31 @@
 let viewer = null;
 let viewerRequest = 0;
 let inspecting = false;
+let modules = null;
+const modelCache = new Map();
 
-export async function createModelViewer(container, canvas, loading, item) {
-  destroyModelViewer();
-  const request = ++viewerRequest;
-  const [THREE, loaderModule, controlsModule] = await Promise.all([
+function loadModules() {
+  modules ||= Promise.all([
     import('three'),
     import('three/addons/loaders/GLTFLoader.js'),
     import('three/addons/controls/TrackballControls.js')
   ]);
+  return modules;
+}
+
+function loadModel(loaderModule, modelPath) {
+  if (!modelCache.has(modelPath)) {
+    const request = new loaderModule.GLTFLoader().loadAsync(modelPath);
+    modelCache.set(modelPath, request);
+    request.catch(() => modelCache.delete(modelPath));
+  }
+  return modelCache.get(modelPath).then(gltf => gltf.scene.clone(true));
+}
+
+export async function createModelViewer(container, canvas, loading, item) {
+  destroyModelViewer();
+  const request = ++viewerRequest;
+  const [THREE, loaderModule, controlsModule] = await loadModules();
   if (request !== viewerRequest) return;
 
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: 'high-performance' });
@@ -41,12 +57,11 @@ export async function createModelViewer(container, canvas, loading, item) {
   controls.maxDistance = 25;
   controls.target.set(0, 0, 0);
 
-  const gltf = await new loaderModule.GLTFLoader().loadAsync(item.model);
+  const model = await loadModel(loaderModule, item.model);
   if (request !== viewerRequest) {
     renderer.dispose();controls.dispose();
     return;
   }
-  const model = gltf.scene;
   const bounds = new THREE.Box3().setFromObject(model);
   const size = bounds.getSize(new THREE.Vector3());
   const center = bounds.getCenter(new THREE.Vector3());
@@ -61,8 +76,8 @@ export async function createModelViewer(container, canvas, loading, item) {
     object.castShadow = false;
     for (const material of Array.isArray(object.material) ? object.material : [object.material]) {
       if (!material?.map) continue;
-      material.map.magFilter = THREE.NearestFilter;
-      material.map.minFilter = THREE.NearestMipmapNearestFilter;
+      material.map.magFilter = item.smoothTexture ? THREE.LinearFilter : THREE.NearestFilter;
+      material.map.minFilter = item.smoothTexture ? THREE.LinearMipmapLinearFilter : THREE.NearestMipmapNearestFilter;
       material.map.needsUpdate = true;
     }
   });
@@ -164,13 +179,6 @@ export function destroyModelViewer() {
   if (!viewer) return;
   cancelAnimationFrame(viewer.frame);
   viewer.controls.dispose();
-  viewer.scene.traverse(object => {
-    if (!object.isMesh) return;
-    object.geometry?.dispose();
-    for (const material of Array.isArray(object.material) ? object.material : [object.material]) {
-      material?.map?.dispose();material?.dispose();
-    }
-  });
   viewer.renderer.dispose();
   viewer = null;
 }

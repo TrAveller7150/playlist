@@ -14,6 +14,13 @@ const items = {
     inspectionId: 'ITEM 002 / GHOSTPIA', caption: 'Ghostpia | Season One NS实体版', factLabel: '入藏', fact: '2025.3.22',
     description: ['《Ghostpia Season One》的 Nintendo Switch 初回限定版，包括了插画集，试制剧本与游戏卡带。尽管没有Switch游戏机但还是大费周章地搞到了手，似乎这么做能让Season 2早点出', '我想有个梦，让我拥有可去之处。\n　　我想有个梦，让我不再自缚手足。'],
     label: 'ITEM NAME', model: 'media/inventory/ghostpia-limited.glb', modelSize: 8.4, previewRotation: -.32
+  },
+  summerBook: {
+    button: 'inspect-summer-book', id: 'ITEM 003', type: 'BOOK / ART COLLECTION', selected: 'SELECTED / 03',
+    name: '诗画集', inspectionName: 'あの夏ぼくは天使を見た',
+    inspectionId: 'ITEM 003 / SUMMER ANGEL', caption: 'あの夏ぼくは天使を見た | 焦茶，岩倉文也', factLabel: '入藏', fact: '2024.11.26',
+    description: ['一位友人赠送的生日礼物，似乎讲述了两位女孩子的故事，但很可惜我一个字都看不懂。不过更可惜的是其画师焦茶已经离世，真是世事无常。'],
+    label: 'ITEM NAME', model: 'media/inventory/summer-angel-book.glb', modelSize: 8.4, previewRotation: 0, smoothTexture: true
   }
 };
 
@@ -148,6 +155,7 @@ document.getElementById('camp-crate-button').addEventListener('click', openColle
 document.getElementById('collection-close').addEventListener('click', requestCloseCollection);
 document.getElementById('inspect-knife').addEventListener('click', () => selectItem(items.knife));
 document.getElementById('inspect-ghostpia').addEventListener('click', () => selectItem(items.ghostpia));
+document.getElementById('inspect-summer-book').addEventListener('click', () => selectItem(items.summerBook));
 preview.addEventListener('click', inspectItem);
 back.addEventListener('click', leaveInspection);
 dialog.addEventListener('cancel', event => {
